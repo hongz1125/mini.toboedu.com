@@ -1,0 +1,101 @@
+/**app.wxss**/
+page{
+  background:#575757;
+  min-height: 100%;
+}
+.main_box{
+}
+.main_box__scroll{
+  width:calc(100vw - 20px);
+  margin:0 10px;
+  padding:10px 0;
+  background:#575757;
+}
+
+.main_list {
+  display: flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  overflow:hidden;
+}
+
+.main_list__li{
+  width:46vw;
+  height:56vw;
+  text-align: center;
+  background-size:100% auto;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.main_list__bg{
+  position: absolute;
+  width:46vw;
+  height:46vw;
+  left:0;
+  top:0;
+}
+
+.main_list__bg2{
+  position: absolute;
+  width:42.4vw;
+  height:42.4vw;
+  left:1.7vw;
+  top:1.7vw;
+  background:#fff;
+}
+
+
+.main_list__img{
+  position: absolute;
+  width:39vw;
+  height:39vw;
+  left:3.4vw;
+  top:3.4vw;
+}
+.main_list__text{
+  position:absolute;
+  width:100%;
+  left:0;
+  bottom:3vw;
+  color:#fff;
+  font-size:16px;
+}
+
+
+
+
+
+
+
+/* ================  */
+
+@font-face {font-family: "iconfont";
+  src: url('//at.alicdn.com/t/font_800823_tkyfmhfsk7h.eot?t=1534837163754'); /* IE9*/
+  src: url('//at.alicdn.com/t/font_800823_tkyfmhfsk7h.eot?t=1534837163754#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('data:application/x-font-woff;charset=utf-8;base64,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') format('woff'),
+  url('//at.alicdn.com/t/font_800823_tkyfmhfsk7h.ttf?t=1534837163754') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('//at.alicdn.com/t/font_800823_tkyfmhfsk7h.svg?t=1534837163754#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.tb-htmal5icon24:before { content: "\e63c"; }
+
+.tb-ai-eye:before { content: "\e669"; }
+
+.tb-jiantouyou:before { content: "\e61f"; }
+
+.tb-jiantouzuo:before { content: "\e620"; }
+
+.tb-bofang:before { content: "\e618"; }
+
+.tb-ic_autorenew:before { content: "\e8e8"; }
+
+.tb-yinle:before { content: "\e7b8"; }

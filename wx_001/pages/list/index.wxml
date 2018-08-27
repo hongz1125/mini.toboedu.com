@@ -1,0 +1,12 @@
+<!-- index.wxml -->
+<view class="main_box">
+  <scroll-view scroll-y class="main_box__scroll">
+    <view class="main_list" wx:if="children">
+      <view class="main_list__li" wx:for="{{children}}" wx:key="index" wx:for-item="item" data-id="{{item.id}}" bindtap="go_detail">
+        <view class="main_list__bg2"></view>
+        <image class="main_list__img" mode="scaleToFill" src="{{item.src}}"></image>
+        <text class="main_list__text">{{item.en}}</text>
+      </view>
+    </view>
+  </scroll-view>
+</view>
