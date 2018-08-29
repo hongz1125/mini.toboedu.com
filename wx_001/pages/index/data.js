@@ -8,8 +8,7 @@ fetch('https://www.shanbay.com/api/v1/bdc/search/?word=billion').then(response =
 	cn:data.data.definition,
 	audio:data.data.audio
 })))
-  .catch(e => console.log("Oops, 
-  error", e))
+  .catch(e => console.log("Oops, error", e))
 
 */
 
@@ -390,6 +389,17 @@ let data = [
         "cn": " n. 头发, 毛发, 毛织物, 极少量, 极短距离",
         "audio": "http://media.shanbay.com/audio/us/hair.mp3"
       }
+    ]
+  },
+  {
+    "id": "104",
+    "src": "/images/104/list_1.jpg",
+    "title": "蔬菜",
+    "children": [
+      {"id":4594,"src": "/images/104/list_1.jpg","en":"pepper","en_s":"/'pepər/","cn":" n. 胡椒粉\nvt. 加胡椒粉于","audio":"http://media.shanbay.com/audio/us/pepper.mp3"},
+      {"id":6174,"src": "/images/104/list_2.jpg","en":"tomato","en_s":"/tə'meɪtoʊ/","cn":" n. 西红柿","audio":"http://media.shanbay.com/audio/us/tomato.mp3"},
+      {"id":11902,"src": "/images/104/list_3.jpg","en":"asparagus","en_s":"/ə'spærəɡəs/","cn":" n. 芦笋","audio":"http://media.shanbay.com/audio/us/asparagus.mp3"},
+      {"id":1930,"src": "/images/104/list_4.jpg","en":"cucumber","en_s":"/'kjuːkʌmbər/","cn":" n. 黄瓜","audio":"http://media.shanbay.com/audio/us/cucumber.mp3"},
     ]
   }
 ];

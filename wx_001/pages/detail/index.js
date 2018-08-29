@@ -19,46 +19,71 @@ Page({
     child_index: null,
     child: null,
     time: null,
+    music:null,
   },
   onLoad(options) {
     let children = this.data.list.find(item => item.id == options.id).children;
     let child_index = children.findIndex(item => item.id == options.cid);
+    
     this.setData({
       id: options.id,
       cid: options.cid,
       children: children,
       child_index: child_index,
-      child: children[child_index]
+      child: children[child_index],
+      // music:music,
     });
     wx.setNavigationBarTitle({
       title: children[child_index].en
     });
+
     this.on_play();
     this.infoListTouchEvent = infoListTouchEvent;
     this.infoListTouchEvent.bind({
       swipe: (e) => {
         this.do_swipe(e)
       }
-    })
+    });
 
   },
   onUnload() {
     clearTimeout(this.data.time);
   },
+  
   on_play(dom) {
     if (this.data.status.no_music && !dom) return;
-    let word = this.data.child.en;
-    const innerAudioContext = wx.createInnerAudioContext()
-    innerAudioContext.autoplay = true
-    innerAudioContext.src = `http://media.shanbay.com/audio/us/${word}.mp3`;
-    innerAudioContext.onPlay(() => {
-      console.log(`播放美式英语：${word}`)
+    let item = this.data.child;
+    // 第一种播放方式
+    // const innerAudioContext = wx.createInnerAudioContext()
+    // innerAudioContext.autoplay = true
+    // innerAudioContext.src = `http://media.shanbay.com/audio/us/${word}.mp3`;
+    // innerAudioContext.onPlay(() => {
+    //   console.log(`播放美式英语：${word}`)
+    // })
+    // innerAudioContext.onError((res) => {
+    //   console.log(res.errMsg)
+    //   console.log(res.errCode)
+    // })
+
+    wx.downloadFile({
+      url: `http://media.shanbay.com/audio/us/${item.en}.mp3`,
+      success: function (res) {
+        var filePath = res.tempFilePath
+        console.log(filePath);
+      }
     })
-    innerAudioContext.onError((res) => {
-      console.log(res.errMsg)
-      console.log(res.errCode)
-    })
+
+
+    //第二种播放方式 
+    let backgroundAudioManager = wx.getBackgroundAudioManager();
+    backgroundAudioManager.title = item.en;
+    backgroundAudioManager.epname = item.en;
+    backgroundAudioManager.singer = 'wechat';
+    backgroundAudioManager.coverImgUrl = item.src;
+    backgroundAudioManager.src = `/images/media/${item.en}.mp3`;
+
   },
+  
   on_hide() {
     this.setData({
       "status.hide_text": !this.data.status.hide_text
