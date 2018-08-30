@@ -66,21 +66,22 @@ Page({
     // })
 
     wx.downloadFile({
-      url: `http://media.shanbay.com/audio/us/${item.en}.mp3`,
+      url: `https://www.toboedu.com/other/mini_program/wx_001/images/media/banana.mp3`,
       success: function (res) {
         var filePath = res.tempFilePath
+        
+        let backgroundAudioManager = wx.getBackgroundAudioManager();
+        backgroundAudioManager.title = item.en;
+        backgroundAudioManager.epname = item.en;
+        backgroundAudioManager.singer = 'wechat';
+        backgroundAudioManager.coverImgUrl = item.src;
+        backgroundAudioManager.src = filePath;
+
         console.log(filePath);
+
       }
     })
 
-
-    //第二种播放方式 
-    let backgroundAudioManager = wx.getBackgroundAudioManager();
-    backgroundAudioManager.title = item.en;
-    backgroundAudioManager.epname = item.en;
-    backgroundAudioManager.singer = 'wechat';
-    backgroundAudioManager.coverImgUrl = item.src;
-    backgroundAudioManager.src = `/images/media/${item.en}.mp3`;
 
   },
   
