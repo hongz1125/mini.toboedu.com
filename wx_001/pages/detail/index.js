@@ -1,90 +1,119 @@
 //logs.js
-import data from '../index/data.js';
 import Util from '../../utils/util';
 import WxTouchEvent from "../../utils/wx-touch-event";
+import { watch, computed } from "../../utils/vuefy";
 
 let infoListTouchEvent = new WxTouchEvent();
 
 Page({
   data: {
-    list: data,
-    item: data[0],
     hide_en: true,
     status: {
       no_music: false,
       hide_text: false,
       auto_play: false,
     },
-    children: null,
+    id: null,
+    cid: null,
+    list: null,
+    list_index: null,
     child_index: null,
-    child: null,
     time: null,
-    music:null,
+    music: null,
   },
   onLoad(options) {
-    let children = this.data.list.find(item => item.id == options.id).children;
-    let child_index = children.findIndex(item => item.id == options.cid);
-    
-    this.setData({
-      id: options.id,
-      cid: options.cid,
-      children: children,
-      child_index: child_index,
-      child: children[child_index],
-      // music:music,
-    });
-    wx.setNavigationBarTitle({
-      title: children[child_index].en
-    });
 
-    this.on_play();
-    this.infoListTouchEvent = infoListTouchEvent;
-    this.infoListTouchEvent.bind({
-      swipe: (e) => {
-        this.do_swipe(e)
-      }
-    });
 
+
+    Util.get_main_list().then(res => {
+      let list = res;
+      let list_index = list.findIndex(item => item.id == options.id);
+      let child_index = list[list_index].children.findIndex(item => item.id == options.cid);
+
+      this.setData({
+        id: options.id,
+        cid: options.cid,
+        list: list,
+        list_index: list_index,
+        child_index: child_index,
+        list_child: list[list_index].children,
+        child: list[list_index].children[child_index],
+      });
+
+      //写入bar中间文字
+      wx.setNavigationBarTitle({
+        title: list[list_index].children[child_index].en
+      });
+
+      //第一次播放声音
+      this.on_play();
+
+      //左右滑动插件
+      this.infoListTouchEvent = infoListTouchEvent;
+      this.infoListTouchEvent.bind({
+        swipe: (e) => {
+          this.do_swipe(e)
+        }
+      });
+
+    })
   },
+
+
   onUnload() {
     clearTimeout(this.data.time);
   },
-  
-  on_play(dom) {
-    if (this.data.status.no_music && !dom) return;
-    let item = this.data.child;
-    // 第一种播放方式
-    // const innerAudioContext = wx.createInnerAudioContext()
-    // innerAudioContext.autoplay = true
-    // innerAudioContext.src = `http://media.shanbay.com/audio/us/${word}.mp3`;
-    // innerAudioContext.onPlay(() => {
-    //   console.log(`播放美式英语：${word}`)
-    // })
-    // innerAudioContext.onError((res) => {
-    //   console.log(res.errMsg)
-    //   console.log(res.errCode)
-    // })
 
-    wx.downloadFile({
-      url: `https://www.toboedu.com/other/mini_program/wx_001/images/media/banana.mp3`,
-      success: function (res) {
-        var filePath = res.tempFilePath
-        
-        let backgroundAudioManager = wx.getBackgroundAudioManager();
+  on_play(dom) {
+    //判断静音 和 手动播放
+    if (this.data.status.no_music && !dom) return;
+    
+
+    this.get_detail_music().then(res => {
+      let item = res;
+      let backgroundAudioManager = wx.getBackgroundAudioManager();
         backgroundAudioManager.title = item.en;
         backgroundAudioManager.epname = item.en;
         backgroundAudioManager.singer = 'wechat';
         backgroundAudioManager.coverImgUrl = item.src;
-        backgroundAudioManager.src = filePath;
-
-        console.log(filePath);
-
-      }
+        backgroundAudioManager.src = item.local_music;
+      console.log(`播放本地音频:${item.local_music}`)
     })
 
+    // wx.downloadFile({
+    //   url: `https://www.toboedu.com/other/mini_program/wx_001/images/media/banana.mp3`,
+    //   success: function (res) {
+    //     var filePath = res.tempFilePath
 
+    //   }
+    // })
   },
-  
+  get_detail_music() {
+    return new Promise((resolve, reject) => {
+      let item = this.data.list[this.data.list_index].children[this.data.child_index];
+      if (item.local_music) {
+        resolve(item);
+      } else {
+        console.log(`下载远端音频:https://www.toboedu.com/other/mini_program/wx_001/images/media/${item.en}.mp3`);
+        wx.downloadFile({
+          url: `https://www.toboedu.com/other/mini_program/wx_001/images/media/${item.en}.mp3`,
+          success: res => {
+            //返回本地地址
+            item.local_music = res.tempFilePath;
+            //重新写入本地仓库
+            wx.setStorageSync('main_list', this.data.list);
+            console.log(`下载音频 成功${item.local_music}`);
+            resolve(item);
+          },
+          fail:res => {
+            console.log(`下载音频 失败！`);
+            reject(res);
+          }
+        })
+      }
+    });
+  },
+
   on_hide() {
     this.setData({
       "status.hide_text": !this.data.status.hide_text
@@ -110,17 +139,17 @@ Page({
     }
   },
   auto_play() {
-    let val = this.data.child_index + 1 >= this.data.children.length ? 0 : this.data.child_index + 1;
+    let val = this.data.child_index + 1 >= this.data.list_child.length ? 0 : this.data.child_index + 1;
     this.do_play(val)
     this.data.time = setTimeout(() => {
       this.auto_play();
     }, 2000);
   },
-  do_swipe(e){
-    if(e.direction == "Right" && (this.data.child_index - 1) >= 0){
+  do_swipe(e) {
+    if (e.direction == "Right" && (this.data.child_index - 1) >= 0) {
       this.do_play(this.data.child_index - 1);
     }
-    if(e.direction == "Left" && (this.data.child_index + 1) < this.data.children.length){
+    if (e.direction == "Left" && (this.data.child_index + 1) < this.data.list_child.length) {
       this.do_play(this.data.child_index + 1);
     }
   },
@@ -128,10 +157,10 @@ Page({
     let val = Number(Util.get_data(dom).val);
     this.do_play(val)
   },
-  do_play(num){
+  do_play(num) {
     this.setData({
-      child: this.data.children[num],
-      child_index: num
+      child_index: num,
+      child: this.data.list_child[num]
     });
     this.on_play();
   },

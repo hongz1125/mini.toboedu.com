@@ -6,7 +6,7 @@
   <view class="detail__bg">
     <image class="detail__img" mode="scaleToFill" src="{{child.src}}" data-item="{{child}}" bindtap="on_play"></image>
     <text class="detail__left iconfont tb-jiantouzuo" data-val="{{child_index - 1}}" bindtap="on_next" wx:if="{{child_index > 0}}"></text>
-    <text class="detail__right iconfont tb-jiantouyou" data-val="{{child_index + 1}}" bindtap="on_next" wx:if="{{child_index < (children.length-1)}}"></text>
+    <text class="detail__right iconfont tb-jiantouyou" data-val="{{child_index + 1}}" bindtap="on_next" wx:if="{{child_index < (list_child.length-1)}}"></text>
   </view>
   <view class="detail__en" data-item="{{child}}" bindtap="on_play">
     <block wx:if="{{!status.hide_text}}">{{child.en}}</block>

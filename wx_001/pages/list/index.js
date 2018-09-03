@@ -1,21 +1,22 @@
 //logs.js
-import data from '../index/data';
 import Util from '../../utils/util';
 
 Page({
   data: {
     id:null,
-    list:data,
-    children:null,
+    list:null,
+    list_child:null,
   },
   onLoad(options){
-    let item = this.data.list.find(item => item.id == options.id);
-    this.setData(
-      {
-        id:options.id,
-        children:item.children
-      }
-    )
+    Util.get_main_list().then(res => {
+      let list = res;
+      let list_child = list.find(item => item.id == options.id).children;
+      this.setData({
+          list: list,
+          id:options.id,
+          list_child:list_child
+      })
+    })
   },
   go_detail(dom){
     let id = this.data.id;
