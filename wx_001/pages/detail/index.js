@@ -1,7 +1,6 @@
 //logs.js
 import Util from '../../utils/util';
 import WxTouchEvent from "../../utils/wx-touch-event";
-import { watch, computed } from "../../utils/vuefy";
 
 let infoListTouchEvent = new WxTouchEvent();
 

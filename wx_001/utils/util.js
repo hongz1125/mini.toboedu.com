@@ -25,7 +25,8 @@ const get_main_list = () => {
       resolve(main_list);
     } else {
       //获取数据
-      let url = `https://www.toboedu.com/other/mini_program/wx_001/data/index.json`;
+      // let url = `https://www.toboedu.com/other/mini_program/wx_001/data/index.json`;
+      let url = `http://127.0.0.1:8001/all`;
       console.log(`请求数据：`, url);
       wx.request({
         url: url,
