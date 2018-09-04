@@ -1,3 +1,3 @@
 ** 启动服务
 
-supervisor db/index
+pm2 start db/index
