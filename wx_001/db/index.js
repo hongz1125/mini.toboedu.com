@@ -1,17 +1,21 @@
-let mysql_cont = {   
-     host: '127.0.0.1',     
-     user: 'root',   
-     password: 'hongz1126',  
-     database:'mini', // 前面建的user表位于这个数据库中 
-      port: 3306  
-};
+const express = require('express');
+var app = express();
+var router = express.Router();
+let db = require('./mysql');
 
 
+router.get('/', function (req, res) {
+
+  let sql = `select * from main_type`;
+  db.query(sql, [], function (result, fields) {
+    res.send(result);
+  });
+
+});
 
 
-
-
-
-
-
+app.use('/', router);
+app.listen(8001, () => {
+  console.log(`服务端口 http://localhost:8001`)
+});
 
