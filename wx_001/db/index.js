@@ -1,5 +1,6 @@
 const express = require('express');
 var app = express();
+var path = require('path');
 var router = express.Router();
 let db = require('./mysql');
 
@@ -13,7 +14,7 @@ let base_success = (res,data) => {
 }
 
 //获取全部数据
-router.get('/all', function (req, res) {
+router.get('/api/all', function (req, res) {
   let sql = `select * from main;`;
   let sql2 = `select * from list;`;
   db.query(sql, [], function (result, fields) {
@@ -27,7 +28,11 @@ router.get('/all', function (req, res) {
   });
 });
 
+
 app.use('/', router);
+
+//静态目录
+app.use('/images', express.static(path.resolve(`images`)))
 
 app.listen(8001, () => {
   console.log(`服务端口 http://localhost:8001`)
