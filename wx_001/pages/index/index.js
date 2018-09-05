@@ -7,6 +7,7 @@ const app = getApp()
 
 Page({
   data: {
+    base_url:Util.base_url,
     motto: 'Hello World',
     // userInfo: {},
     // hasUserInfo: false,

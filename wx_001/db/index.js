@@ -19,11 +19,23 @@ router.get('/api/all', function (req, res) {
   let sql2 = `select * from list;`;
   db.query(sql, [], function (result, fields) {
     db.query(sql2, [], function (result2, fields2) {
-      let data = {
-        type:result,
-        list:result2,
-      };
-      base_success(res,data);
+      let list_one;
+      list_one = result.reduce((sam,item) => {
+        let list_child = [];
+        list_child = result2.reduce((sam2,item2) => {
+          if(item2.p_id == item.id){
+            sam2 = sam2.concat(item2)
+          }
+          return sam2;
+        },[])
+        
+        if(list_child.length){
+          item.children = list_child;
+        }
+        return sam.concat(item);
+      },[])
+      
+      base_success(res,list_one);
     });
   });
 });

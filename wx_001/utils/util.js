@@ -1,3 +1,6 @@
+
+let base_url = `https://www.toboedu.com/wx_001`;
+
 const formatTime = date => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
@@ -25,7 +28,7 @@ const get_main_list = () => {
       resolve(main_list);
     } else {
       //获取数据
-      let url = `https://www.toboedu.com/wx_001/all`;
+      let url = `${base_url}/api/all`;
       console.log(`请求数据：`, url);
       wx.request({
         url: url,
@@ -44,6 +47,7 @@ const get_main_list = () => {
 
 
 module.exports = {
+  base_url:base_url,
   formatTime: formatTime,
   get_data: get_data,
   get_main_list: get_main_list,
