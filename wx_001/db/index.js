@@ -40,6 +40,14 @@ router.get('/other', function (req, res) {
 
 
 
+
+router.get('/other/', function (req, res) {
+  res.send('进入目录 /other/');
+});
+
+
+
+
 app.use('/', router);
 
 app.listen(8001, () => {
