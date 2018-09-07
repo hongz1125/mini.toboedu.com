@@ -1,5 +1,5 @@
 
-let base_url = `https://www.toboedu.com/wx_001`;
+let base_url = `https://www.toboedu.com/mini_program`;
 
 const formatTime = date => {
   const year = date.getFullYear()

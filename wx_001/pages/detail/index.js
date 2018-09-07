@@ -38,15 +38,10 @@ Page({
         child_index: child_index,
         list_child: list[list_index].children,
         child: list[list_index].children[child_index],
+      },res => {
+        this.do_play(this.data.child_index);
       });
 
-      //写入bar中间文字
-      wx.setNavigationBarTitle({
-        title: list[list_index].children[child_index].en
-      });
-
-      //第一次播放声音
-      this.on_play();
 
       //左右滑动插件
       this.infoListTouchEvent = infoListTouchEvent;
@@ -161,11 +156,16 @@ Page({
     let val = Number(Util.get_data(dom).val);
     this.do_play(val)
   },
+
   do_play(num) {
     this.setData({
       child_index: num,
       child: this.data.list_child[num]
     });
+    //写入bar中间文字
+    wx.setNavigationBarTitle({
+      title: this.data.list_child[num].cn
+    });    
     this.on_play();
   },
   touchStart: infoListTouchEvent.start.bind(infoListTouchEvent),

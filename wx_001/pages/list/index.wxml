@@ -1,10 +1,10 @@
 <!-- index.wxml -->
 <view class="main_box">
   <scroll-view scroll-y class="main_box__scroll">
-    <view class="main_list" wx:if="list_child">
+    <view class="main_list" wx:if="{{list_child}}">
       <view class="main_list__li" wx:for="{{list_child}}" wx:key="index" wx:for-item="item" data-id="{{item.id}}" bindtap="go_detail">
         <view class="main_list__bg2"></view>
-        <image class="main_list__img" mode="scaleToFill" src="/images/{{item.p_id}}/{{item.en}}.jpg"></image>
+        <image class="main_list__img" mode="scaleToFill" src="https://www.toboedu.com/mini_program/static/images/{{item.p_id}}/{{item.en}}.jpg"></image>
         <text class="main_list__text">{{item.en}}</text>
       </view>
     </view>

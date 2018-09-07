@@ -1,15 +1,15 @@
 <!-- index.wxml -->
 <view class="main_box">
   <scroll-view scroll-y class="main_box__scroll">
-    <view class="main_list">
+    <view class="main_list" wx:if="{{list}}">
       <view class="main_list__li" wx:for="{{list}}" wx:key="index" wx:for-item="item" bindtap="go_list" data-id="{{item.id}}">
-        <image class="main_list__bg" src="https://www.toboedu.com/wx_001/images/main_bg.jpg"></image>
-        <image class="main_list__img" mode="scaleToFill" src="/images/type/{{item.en}}.jpg"></image>
+        <image class="main_list__bg" src="https://www.toboedu.com/mini_program/static/images/main_bg.jpg"></image>
+        <image class="main_list__img" mode="scaleToFill" src="https://www.toboedu.com/mini_program/static/images/type/{{item.en}}.jpg"></image>
         <text class="main_list__text">{{item.title}}</text>
       </view>
       <view class="main_list__li" >
-        <image class="main_list__bg" src="https://www.toboedu.com/wx_001/images/main_bg.jpg"></image>
-        <image class="main_list__img" mode="scaleToFill" src="https://www.toboedu.com/wx_001/images/main_service.jpg"></image>
+        <image class="main_list__bg" src="https://www.toboedu.com/mini_program/static/images/main_bg.jpg"></image>
+        <image class="main_list__img" mode="scaleToFill" src="https://www.toboedu.com/mini_program/static/images/main_service.jpg"></image>
         <text class="main_list__text">意见反馈</text>
         <button open-type="feedback"></button>
       </view>
