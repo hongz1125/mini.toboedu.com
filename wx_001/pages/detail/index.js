@@ -17,6 +17,7 @@ Page({
     list: null,
     list_index: null,
     child_index: null,
+    child:null,
     time: null,
     music: null,
   },
@@ -74,7 +75,7 @@ Page({
         backgroundAudioManager.title = item.en;
         backgroundAudioManager.epname = item.en;
         backgroundAudioManager.singer = 'wechat';
-        backgroundAudioManager.coverImgUrl = item.src;
+        backgroundAudioManager.coverImgUrl = `${Util.base_url}/images/${item.p_id}/${item.en}.jpg`;
         backgroundAudioManager.src = item.local_music;
       console.log(`播放本地音频:${item.local_music}`)
     })
@@ -90,26 +91,30 @@ Page({
   get_detail_music() {
     return new Promise((resolve, reject) => {
       let item = this.data.list[this.data.list_index].children[this.data.child_index];
-      if (item.local_music) {
-        resolve(item);
-      } else {
-        console.log(`下载远端音频:https://www.toboedu.com/other/mini_program/wx_001/images/media/${item.en}.mp3`);
-        wx.downloadFile({
-          url: `https://www.toboedu.com/other/mini_program/wx_001/images/media/${item.en}.mp3`,
-          success: res => {
-            //返回本地地址
-            item.local_music = res.tempFilePath;
-            //重新写入本地仓库
-            wx.setStorageSync('main_list', this.data.list);
-            console.log(`下载音频 成功${item.local_music}`);
-            resolve(item);
-          },
-          fail:res => {
-            console.log(`下载音频 失败！`);
-            reject(res);
-          }
-        })
-      }
+      item.local_music = `http://media.shanbay.com/audio/us/${item.en}.mp3`;
+      //播放网络音乐
+      resolve(item);
+      //播放本地影月
+      // if (item.local_music) {
+      //   resolve(item);
+      // } else {
+      //   console.log(`下载远端音频:https://www.toboedu.com/other/mini_program/wx_001/images/media/${item.en}.mp3`);
+      //   wx.downloadFile({
+      //     url: `https://www.toboedu.com/other/mini_program/wx_001/images/media/${item.en}.mp3`,
+      //     success: res => {
+      //       //返回本地地址
+      //       item.local_music = res.tempFilePath;
+      //       //重新写入本地仓库
+      //       wx.setStorageSync('main_list', this.data.list);
+      //       console.log(`下载音频 成功${item.local_music}`);
+      //       resolve(item);
+      //     },
+      //     fail:res => {
+      //       console.log(`下载音频 失败！`);
+      //       reject(res);
+      //     }
+      //   })
+      // }
     });
   },
 

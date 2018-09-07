@@ -4,7 +4,7 @@
     <view class="main_list">
       <view class="main_list__li" wx:for="{{list}}" wx:key="index" wx:for-item="item" bindtap="go_list" data-id="{{item.id}}">
         <image class="main_list__bg" src="https://www.toboedu.com/wx_001/images/main_bg.jpg"></image>
-        <image class="main_list__img" mode="scaleToFill" src="{{item.src}}"></image>
+        <image class="main_list__img" mode="scaleToFill" src="/images/type/{{item.en}}.jpg"></image>
         <text class="main_list__text">{{item.title}}</text>
       </view>
       <view class="main_list__li" >

@@ -33,7 +33,7 @@ const get_main_list = () => {
       wx.request({
         url: url,
         success: res => {
-          wx.setStorageSync('main_list', res.data.data);
+          // wx.setStorageSync('main_list', res.data.data);
           resolve(res.data.data);
         },
         fail: res => {
