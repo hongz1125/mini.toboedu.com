@@ -44,7 +44,7 @@ router.get('/api/all', function (req, res) {
 app.use('/', router);
 
 //静态目录
-app.use('/images', express.static(path.resolve(`images`)))
+app.use('/static', express.static(path.resolve(`static`)))
 
 app.listen(8001, () => {
   console.log(`服务端口 http://localhost:8001`)
