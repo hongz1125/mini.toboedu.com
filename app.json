@@ -1,15 +1,16 @@
 {
-  "pages":[
+  "pages": [
     "pages/index/index",
     "pages/list/index",
     "pages/detail/index",
     "pages/logs/logs"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#575757",
     "navigationBarTitleText": "英语单词卡",
-    "navigationBarTextStyle":"light",
-    "backgroundColor":"#575757"
-  }
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#575757"
+  },
+  "sitemapLocation": "sitemap.json"
 }
