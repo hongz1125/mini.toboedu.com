@@ -1,6 +1,6 @@
 ** 启动服务
 
-pm2 start serve/index
+pm2 start serve/index --name "英语"
 
 
 
