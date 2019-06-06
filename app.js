@@ -19,7 +19,7 @@ App({
   get_openid(code){
     wx.request({
       url: `${this.globalData.api_base}/wxlogin`,
-      method:'get',
+      method:'post',
       data:{
         code:code
       },
@@ -96,6 +96,7 @@ App({
         console.log(`请求数据：`, url);
         wx.request({
           url: url,
+          method:"post",
           success: res => {
             this.globalData.main_list = res.data.data;
             resolve(res.data.data);

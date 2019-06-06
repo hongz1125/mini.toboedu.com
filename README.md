@@ -2,13 +2,8 @@
 
 为学龄前小孩学习英语提供工具
 
-
-
-
-
-
-
 # 获取信息
+网页打开  https://www.shanbay.com
 
 fetch('https://www.shanbay.com/api/v1/bdc/search/?word=pepper').then(response => response.json())
   .then(data => console.log(JSON.stringify({
