@@ -4,7 +4,7 @@
           bindtouchend="touchEnd"
           bindtouchcancel="touchCancel">
   <view class="detail__bg">
-    <image class="detail__img" mode="scaleToFill" src="https://www.toboedu.com/mini_program/static/images/{{child.p_id}}/{{child.en}}.jpg" data-item="{{child}}" bindtap="on_play"></image>
+    <image class="detail__img" mode="scaleToFill" src="{{child.src}}" data-item="{{child}}" bindtap="on_play"></image>
     <text class="detail__left iconfont tb-jiantouzuo" data-val="{{child_index - 1}}" bindtap="on_next" wx:if="{{child_index > 0}}"></text>
     <text class="detail__right iconfont tb-jiantouyou" data-val="{{child_index + 1}}" bindtap="on_next" wx:if="{{child_index < (list_child.length-1)}}"></text>
   </view>
@@ -12,7 +12,7 @@
     <block wx:if="{{!status.hide_text}}">{{child.en}}</block>
   </view>
   <view class="detail__ens" data-item="{{child}}" bindtap="on_play">
-    <block wx:if="{{!status.hide_text}}">{{child.en_s}}</block>
+    <block wx:if="{{!status.hide_text}}">/{{child.en_s}}/</block>
   </view>
   <view class="detail__btn">
     <text class="iconfont tb-bofang" bindtap="on_play"></text>

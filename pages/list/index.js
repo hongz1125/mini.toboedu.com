@@ -1,6 +1,6 @@
 //logs.js
 import Util from '../../utils/util';
-
+const app = getApp()
 Page({
   data: {
     id:null,
@@ -8,7 +8,7 @@ Page({
     list_child:null,
   },
   onLoad(options){
-    Util.get_main_list().then(res => {
+    app.get_main_list().then(res => {
       let list = res;
       let list_child = list.find(item => item.id == options.id).children;
       this.setData({

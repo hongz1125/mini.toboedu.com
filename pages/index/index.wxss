@@ -6,3 +6,21 @@ button{
   right:0;
   bottom:0;
 }
+.head{
+  color:#999;
+  position: absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  right:0;
+  font-size:20vw;
+  line-height:42vw;
+  text-align:center;
+}
+.main_list__head{
+  width:20vw;
+  height:20vw;
+  left:13vw;
+  top:13vw;
+  position:absolute;
+}

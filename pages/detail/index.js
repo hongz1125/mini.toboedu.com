@@ -3,6 +3,7 @@ import Util from '../../utils/util';
 import WxTouchEvent from "../../utils/wx-touch-event";
 
 let infoListTouchEvent = new WxTouchEvent();
+const app = getApp();
 
 Page({
   data: {
@@ -25,7 +26,7 @@ Page({
 
 
 
-    Util.get_main_list().then(res => {
+    app.get_main_list().then(res => {
       let list = res;
       let list_index = list.findIndex(item => item.id == options.id);
       let child_index = list[list_index].children.findIndex(item => item.id == options.cid);
@@ -74,42 +75,13 @@ Page({
         backgroundAudioManager.src = item.local_music;
       console.log(`播放本地音频:${item.local_music}`)
     })
-
-    // wx.downloadFile({
-    //   url: `https://www.toboedu.com/other/mini_program/wx_001/images/media/banana.mp3`,
-    //   success: function (res) {
-    //     var filePath = res.tempFilePath
-
-    //   }
-    // })
   },
   get_detail_music() {
     return new Promise((resolve, reject) => {
       let item = this.data.list[this.data.list_index].children[this.data.child_index];
-      item.local_music = `http://media.shanbay.com/audio/us/${item.en}.mp3`;
+      item.local_music = item.music;
       //播放网络音乐
       resolve(item);
-      //播放本地影月
-      // if (item.local_music) {
-      //   resolve(item);
-      // } else {
-      //   console.log(`下载远端音频:https://www.toboedu.com/other/mini_program/wx_001/images/media/${item.en}.mp3`);
-      //   wx.downloadFile({
-      //     url: `https://www.toboedu.com/other/mini_program/wx_001/images/media/${item.en}.mp3`,
-      //     success: res => {
-      //       //返回本地地址
-      //       item.local_music = res.tempFilePath;
-      //       //重新写入本地仓库
-      //       wx.setStorageSync('main_list', this.data.list);
-      //       console.log(`下载音频 成功${item.local_music}`);
-      //       resolve(item);
-      //     },
-      //     fail:res => {
-      //       console.log(`下载音频 失败！`);
-      //       reject(res);
-      //     }
-      //   })
-      // }
     });
   },
 

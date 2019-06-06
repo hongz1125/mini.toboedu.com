@@ -2,44 +2,117 @@
 App({
   onLaunch: function (option) {
     console.log(`on launch！`,option);
+    this.get_login();
+  },
+  get_login(){
+    let self = this;
+    wx.login({
+      success (res) {
+        if (res.code) {
+          self.get_openid(res.code);
+        } else {
+          console.log('登录失败！' + res.errMsg)
+        }
+      }
+    })
+  },
+  get_openid(code){
+    wx.request({
+      url: `${this.globalData.api_base}/wxlogin`,
+      method:'get',
+      data:{
+        code:code
+      },
+      success: res => {
+        let data = res.data && res.data.data
+        if(data){
+          this.globalData.openid = data.openid;
+          this.get_userinfo();
+        }
+      },
+      fail: res => {
+        console.log(res);
+      }
+    })
+  },
+  // 自动获取用户信息
+  get_userinfo(){
+    let self = this;
+    wx.request({
+      url: `${self.globalData.api_base}/userinfo`,
+      method:'post',
+      data:{
+        openid:this.globalData.openid,
+      },
+      success: res => {
+        let data = res.data && res.data.data;
+        if(data){
+          self.globalData.userInfo = {
+            avatar:data.avatar,
+            nickname:data.nickname
+          }
+        }
+      },
+      fail: res => {
+        console.log(res);
+      }
+    })
+  },
 
-    // 展示本地存储能力
-    // var logs = wx.getStorageSync('logs') || []
-    // logs.unshift(Date.now())
-    // wx.setStorageSync('logs', logs)
 
 
-    // 登录
-    // wx.login({
-    //   success: res => {
-    //     // 发送 res.code 到后台换取 openId, sessionKey, unionId
-    //   }
-    // })
-    // 获取用户信息
-    // wx.getSetting({
-    //   success: res => {
-    //     if (res.authSetting['scope.userInfo']) {
-    //       // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-    //       wx.getUserInfo({
-    //         success: res => {
-    //           // 可以将 res 发送给后台解码出 unionId
-    //           this.globalData.userInfo = res.userInfo
+  //写入登陆用户 与 登陆次数
+  put_logintime(userInfo){
+    let self = this;
+    return new Promise((resolve, reject) => {
+      wx.request({
+        url: `${self.globalData.api_base}/user_login`,
+        method:"post",
+        data:{
+          ...userInfo,
+          openid:self.globalData.openid,
+        },
+        success: res => {
+          self.globalData.userInfo = res.data.data;
+          resolve();
+        },
+        fail: res => {
+          console.log(res);
+          reject(res);
+        }
+      })
+    })
+  },
 
-    //           // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-    //           // 所以此处加入 callback 以防止这种情况
-    //           if (this.userInfoReadyCallback) {
-    //             this.userInfoReadyCallback(res)
-    //           }
-    //         }
-    //       })
-    //     }
-    //   }
-    // });
-
-    
+  //获取主要列表
+  get_main_list(){
+    return new Promise((resolve, reject) => {
+      let main_list = this.globalData.main_list;
+      if (main_list) {
+        resolve(main_list);
+      } else {
+        //获取数据
+        let url = `${this.globalData.api_base}/all`;
+        console.log(`请求数据：`, url);
+        wx.request({
+          url: url,
+          success: res => {
+            this.globalData.main_list = res.data.data;
+            resolve(res.data.data);
+          },
+          fail: res => {
+            console.log(res);
+            reject();
+          }
+        })
+      }
+    })
   },
   globalData: {
+    api_base:'https://www.toboedu.com/api/english_mini',
+    openid:null,
     userInfo: null,
     main_list:null,
   }
 })
+

@@ -1,10 +1,14 @@
-** 启动服务
+# 英语小程序
 
-pm2 start serve/index
+为学龄前小孩学习英语提供工具
 
 
 
-** 获取信息
+
+
+
+
+# 获取信息
 
 fetch('https://www.shanbay.com/api/v1/bdc/search/?word=pepper').then(response => response.json())
   .then(data => console.log(JSON.stringify({
