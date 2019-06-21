@@ -27,7 +27,7 @@ Page({
 
 
     app.get_main_list().then(res => {
-      let list = res;
+      let list = app.globalData.main_list;
       let list_index = list.findIndex(item => item.id == options.id);
       let child_index = list[list_index].children.findIndex(item => item.id == options.cid);
 

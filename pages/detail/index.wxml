@@ -1,3 +1,4 @@
+<view class="detail_out">
 <view class="detail" wx:if="{{child}}" 
           bindtouchstart="touchStart"
           bindtouchmove="touchMove"
@@ -20,4 +21,5 @@
     <text class="iconfont tb-ic_autorenew {{status.auto_play ? '' : 'disabled'}}" bindtap="on_auto_play"></text>
     <text class="iconfont tb-ai-eye {{!status.hide_text ? '' : 'disabled'}}" bindtap="on_hide"></text>
   </view>
+</view>
 </view>

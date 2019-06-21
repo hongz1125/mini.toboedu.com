@@ -5,6 +5,10 @@
   margin:auto;
   text-align:center;
 }
+.detail_out{
+  background:#575757;
+  height:100vh;
+}
 .detail__bg{
   height:74vw;
   position: relative;

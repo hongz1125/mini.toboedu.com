@@ -1,28 +1,15 @@
 <view class="main_box">
   <scroll-view scroll-y class="main_box__scroll">
+    <button bindtap="on_pay" style="display:none">支付 0.01</button>
     <view class="main_list" wx:if="{{list}}">
       <view class="main_list__li" wx:for="{{list}}" wx:key="index" wx:for-item="item" bindtap="go_list" data-id="{{item.id}}">
         <image class="main_list__bg" src="https://www.toboedu.com/static/mini_english/main_bg.jpg"></image>
         <image class="main_list__img" mode="scaleToFill" src="{{item.src}}"></image>
         <text class="main_list__text">{{item.cn}}</text>
       </view>
-      <view class="main_list__li" >
-        <image class="main_list__bg" src="https://www.toboedu.com/static/mini_english/main_bg.jpg"></image>
-        <image class="main_list__img" mode="scaleToFill" src="https://www.toboedu.com/static/mini_english/main_service.jpg"></image>
-        <text class="main_list__text">意见反馈</text>
-        <button open-type="feedback"></button>
-      </view>
-      <view class="main_list__li" wx:if="{{!userInfo}}">
-         <image class="main_list__bg" src="https://www.toboedu.com/static/mini_english/main_bg.jpg"></image>
-         <text class="iconfont tb-guanwangicon31334 head"></text>
-         <text class="main_list__text">用户登陆</text>
-         <button  type="primary" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">登陆</button>
-      </view>
-      <view class="main_list__li" wx:if="{{userInfo}}">
-         <image class="main_list__bg" src="https://www.toboedu.com/static/mini_english/main_bg.jpg"></image>
-         <image class="main_list__head" src="{{userInfo.avatar}}" />
-         <text class="main_list__text">{{userInfo.nickname}}</text>
-      </view>
+    </view>
+    <view class="weui-footer footer">
+      <view class="weui-footer__text">Copyright © 2019 TOBO.EDU</view>
     </view>
   </scroll-view>
 </view>

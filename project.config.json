@@ -35,7 +35,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 2,
+			"current": 4,
 			"list": [
 				{
 					"id": 0,
@@ -54,6 +54,20 @@
 					"name": "list",
 					"pathName": "pages/list/index",
 					"query": "id=101",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "user",
+					"pathName": "pages/user/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 4,
+					"name": "feedback",
+					"pathName": "pages/feedback/index",
+					"query": "",
 					"scene": null
 				}
 			]

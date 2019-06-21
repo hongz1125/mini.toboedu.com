@@ -3,14 +3,41 @@
     "pages/index/index",
     "pages/list/index",
     "pages/detail/index",
-    "pages/logs/logs"
+    "pages/feedback/index",
+    "pages/user/index"
   ],
   "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#575757",
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#ffffff",
     "navigationBarTitleText": "英语单词卡",
-    "navigationBarTextStyle": "white",
-    "backgroundColor": "#575757"
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#ffffff"
+  },
+  "tabBar": {
+    "color": "#c1c1c1",
+    "selectedColor": "#592b0c",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "image/fire_b.png",
+        "selectedIconPath": "image/fire_a.png",
+        "text": "学习"
+      },
+      {
+        "pagePath": "pages/user/index",
+        "iconPath": "image/my_b.png",
+        "selectedIconPath": "image/my_a.png",
+        "text": "我"
+      },
+      {
+        "pagePath": "pages/feedback/index",
+        "iconPath": "image/warn_b.png",
+        "selectedIconPath": "image/warn_a.png",
+        "text": "反馈"
+      }
+    ]
   },
   "sitemapLocation": "sitemap.json"
 }

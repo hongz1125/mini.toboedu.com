@@ -9,7 +9,7 @@ Page({
   },
   onLoad(options){
     app.get_main_list().then(res => {
-      let list = res;
+      let list = app.globalData.main_list;
       let list_child = list.find(item => item.id == options.id).children;
       this.setData({
           list: list,

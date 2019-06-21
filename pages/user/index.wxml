@@ -1,0 +1,37 @@
+<view>
+  <view wx:if="{{!userInfo}}">
+    <view class="iconfont tb-guanwangicon31334 head"></view>
+    <button class="login" type="primary" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">微信授权登陆</button>
+  </view>
+  <view wx:if="{{userInfo}}">
+    <view class="head_box">
+      <image class="head_box__pic" src="{{userInfo.avatar}}" />
+      <image class="head_box__hat" src="/image/hat.png" wx:if="{{userInfo.is_vip == 1}}" />
+    </view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell">
+        <view class="weui-cell__bd">昵称</view>
+        <view class="weui-cell__ft">{{userInfo.nickname}}</view>
+      </view>
+      <view class="weui-cell">
+        <view class="weui-cell__bd">地区</view>
+        <view class="weui-cell__ft">{{userInfo.country + ' ' + userInfo.province + ' ' + userInfo.city}}</view>
+      </view>
+    </view>
+
+    <view class="weui-panel weui-panel_access" wx:if="{{userInfo.is_vip != 1}}">
+      <view class="weui-media-box weui-media-box_text">
+        <view class="weui-media-box__title weui-media-box__title_in-text">成为会员</view>
+        <view class="weui-media-box__desc">成为会员即可解锁全部图集，有亮点，并可以点亮头像。</view>
+        <view class="pay_btn"><button class="weui-btn mini-btn" type="primary"  bindtap="on_pay" size="mini">确认</button>
+      </view>
+    </view>
+
+
+
+  </view>
+</view>
+<view class="weui-footer footer">
+  <view class="weui-footer__text">Copyright © 2019 TOBO.EDU</view>
+</view>
+</view>

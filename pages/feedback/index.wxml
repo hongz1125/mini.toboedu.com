@@ -1,0 +1,8 @@
+<view>
+  <view class="feedback">
+    <button class="weui-btn mini-btn clarity" type="primary" open-type="feedback">意见反馈</button>
+  </view>
+  <view class="weui-footer footer">
+    <view class="weui-footer__text">Copyright © 2019 TOBO.EDU</view>
+  </view>
+</view>
