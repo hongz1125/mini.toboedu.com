@@ -1,6 +1,8 @@
 # 英语小程序
 
 为学龄前小孩学习英语提供工具
+=======
+pm2 start serve/index --name "英语"
 
 # 获取信息
 网页打开  https://www.shanbay.com
