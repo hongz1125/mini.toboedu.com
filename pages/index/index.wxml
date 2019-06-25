@@ -1,11 +1,13 @@
-<view class="main_box">
+<view class="main_box" wx:if="{{is_ready}}">
+
   <scroll-view scroll-y class="main_box__scroll">
-    <button bindtap="on_pay" style="display:none">支付 0.01</button>
+  <component-nav userInfo="userInfo" index="1" inner-text="Some text"></component-nav>
     <view class="main_list" wx:if="{{list}}">
-      <view class="main_list__li" wx:for="{{list}}" wx:key="index" wx:for-item="item" bindtap="go_list" data-id="{{item.id}}">
+      <view class="main_list__li {{item.is_vip && !userInfo.is_vip ? 'is_lock' : ''}}" data-item="{{item}}" data-lock="{{item.is_vip && !userInfo.is_vip}}" wx:for="{{list}}" wx:key="index" wx:for-item="item" bindtap="go_list">
         <image class="main_list__bg" src="https://www.toboedu.com/static/mini_english/main_bg.jpg"></image>
         <image class="main_list__img" mode="scaleToFill" src="{{item.src}}"></image>
         <text class="main_list__text">{{item.cn}}</text>
+        <view class="main_list__lock iconfont tb_suo"></view>
       </view>
     </view>
     <view class="weui-footer footer">

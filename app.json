@@ -13,31 +13,5 @@
     "navigationBarTextStyle": "black",
     "backgroundColor": "#ffffff"
   },
-  "tabBar": {
-    "color": "#c1c1c1",
-    "selectedColor": "#592b0c",
-    "borderStyle": "black",
-    "backgroundColor": "#ffffff",
-    "list": [
-      {
-        "pagePath": "pages/index/index",
-        "iconPath": "image/fire_b.png",
-        "selectedIconPath": "image/fire_a.png",
-        "text": "学习"
-      },
-      {
-        "pagePath": "pages/user/index",
-        "iconPath": "image/my_b.png",
-        "selectedIconPath": "image/my_a.png",
-        "text": "我"
-      },
-      {
-        "pagePath": "pages/feedback/index",
-        "iconPath": "image/warn_b.png",
-        "selectedIconPath": "image/warn_a.png",
-        "text": "反馈"
-      }
-    ]
-  },
   "sitemapLocation": "sitemap.json"
 }

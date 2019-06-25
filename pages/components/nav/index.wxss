@@ -1,0 +1,66 @@
+@import '/pages/common/iconfont.wxss';
+
+.nav{
+  margin-bottom:2vw;
+  height:10vw;
+  position:relative;
+  text-align: right;
+  padding:1vw;
+}
+.nav__ico {
+  font-size: 7vw;
+  line-height: 10vw;
+  height:10vw;
+  width:10vw;
+  display: inline-block;
+  color:#fff;
+  text-align: center;
+  margin-left:1vw;
+}
+
+.tb_shouye{
+  position:absolute;
+  left:1vw;
+  top:0;
+}
+.tb_icon_service{
+  position: relative;
+
+}
+.tb_icon_service button{
+  position: absolute;
+  left:0;
+  right:0;
+  top:0;
+  bottom:0;
+  opacity: .01;
+}
+
+.ico_login{
+  position: relative;
+}
+.ico_login button{
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  bottom:0;
+  opacity: .01;
+}
+.ico_login image.pic{
+  position: absolute;
+  border-radius: 100%;
+  left:1vw;
+  top:1vw;
+  width:8vw;
+  height:8vw;
+}
+
+.ico_login image.vip{
+  position: absolute;
+  top:0;
+  right:0;
+  width:3.5vw;
+  height:3.5vw;
+  transform:rotate(30deg);
+}

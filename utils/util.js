@@ -2,7 +2,7 @@
 
 let api_base = 'https://www.toboedu.com/api/english_mini';
 
-
+let loading = 0;
 
 const formatTime = date => {
   const year = date.getFullYear()
@@ -25,13 +25,15 @@ const get_data = item => {
 }
 
 const loading_show = () => {
+  console.log(loading);
+  loading++;
   wx.showLoading({
     title: '加载中...',
   })
 }
 
-const loading_hide = (i) => {
-  if(i) return;
+const loading_hide = () => {
+  if (--loading) return;
   wx.hideLoading();
 }
 
@@ -39,20 +41,57 @@ const loading_hide = (i) => {
   * @desc 封装微信request 为promise使用
 **/
 const ajax = (param) => {
-  return new Promise((resolve,reject) => {
+  return new Promise((resolve, reject) => {
+    loading_show();
     wx.request({
       url: `${api_base}${param.url}`,
-      data:param.data,
-      method:param.method || 'post',
-      success (res) {
+      data: param.data,
+      method: param.method || 'post',
+      success(res) {
+        loading_hide();
         resolve(res.data && res.data.data)
       },
-      fail (err) {
+      fail(err) {
+        loading_hide();
         reject(err)
       }
     })
   })
 }
+
+/**
+ * @desc 链接方法  
+ * @param url 为真的时候 跳转 url 否则从dom 获取data-url 值
+ **/
+const to_link = (e, url) => {
+  let curl = url || get_data(e).url;
+  wx.navigateTo({ url: curl });
+};
+
+/**
+ * @desc 微信原生弹框 改成promise
+ **/
+const show_modal = (data) => {
+  return new Promise((resolve, reject) => {
+    console.log(wx);
+    wx.showModal({
+      title: data.title,
+      content: data.content,//'弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内'
+      confirmText: data.confirmText,//主操作
+      cancelText: data.cancelText,//副操作
+      success: function (res) {
+
+        console.log(1);
+        if (res.confirm) {
+          resolve();//'用户点击主操作'
+        } else {
+          reject();//'用户点击辅助操作'
+        }
+      }
+    });
+  })
+};
+
 
 
 module.exports = {
@@ -60,5 +99,8 @@ module.exports = {
   get_data: get_data,
   loading_show,
   loading_hide,
-  ajax
+  ajax,
+  loading,
+  to_link,
+  show_modal
 }

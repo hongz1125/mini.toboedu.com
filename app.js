@@ -1,12 +1,12 @@
-import { formatTime, get_data, loading_show, loading_hide, ajax } from 'utils/util';
+import { ajax ,to_link} from 'utils/util';
 
 App({
-  onLaunch() {console.log(`on launch！`);},
-  onShow(){console.log('App onShow');},
-  onHide(){console.log('App onHide');},
+  onLaunch() { console.log(`on launch！`); },
+  onShow() { console.log('App onShow'); },
+  onHide() { console.log('App onHide'); },
   //每个页面onload的时候需要执行
-  on_ready(){
-    return new Promise((resolve,reject) => {
+  on_ready() {
+    return new Promise((resolve, reject) => {
       this.get_code().then(this.get_login).then(this.get_main_list).then(resolve).catch(reject);
     });
   },
@@ -25,36 +25,35 @@ App({
   },
   //获取openid 与 用户信息
   get_login(code) {
-    return new Promise((resolve,reject) => {
-      if(this.globalData.openid && this.globalData.userInfo){
+    return new Promise((resolve, reject) => {
+      if (this.globalData.openid && this.globalData.userInfo) {
         resolve();
       }
       ajax({
-          url: `/wxlogin`,
-          data: {
-            code: code
-          }
-        }).then(res => {
-          this.globalData.openid = res.wx_openid;
-          this.globalData.userInfo = res;
-          resolve();
-        }).catch(err => {
-          reject(err)
-        });
-    }) 
+        url: `/wxlogin`,
+        data: {
+          code: code
+        }
+      }).then(res => {
+        this.globalData.openid = res.wx_openid;
+        this.globalData.userInfo = res.user_info;
+        resolve();
+      }).catch(err => {
+        reject(err)
+      });
+    })
   },
   //写入用户信息
   put_logintime(userInfo) {
-    let self = this;
     return new Promise((resolve, reject) => {
       ajax({
         url: `/user_login`,
         data: {
           ...userInfo,
-          wx_openid: self.globalData.openid,
+          wx_openid: this.globalData.openid,
         }
       }).then(res => {
-        self.globalData.userInfo = res.data.data;
+        this.globalData.userInfo = res;
         resolve();
       }).catch(reject);
     })
@@ -64,29 +63,68 @@ App({
   get_main_list() {
     return new Promise((resolve, reject) => {
       if (this.globalData.main_list) {
-        resolve();
-        return;
+        return resolve();
       }
       //获取数据
-      let url = `${this.globalData.api_base}/all`;
-      wx.request({
-        url: url,
-        method: "post",
-        success: res => {
-          this.globalData.main_list = res.data.data;
-          resolve();
-        },
-        fail: res => {
-          reject(new Error(res));
-        }
+      ajax({
+        url: `/all`
+      }).then(res => {
+        this.globalData.main_list = res;
+        resolve();
+      }).then(res => {
+        reject(new Error(res));
       })
     })
   },
+  //全站支付页面
+  on_pay() {
+    ajax({
+      url: `/pay`,
+      data: {
+        openid: this.globalData.openid
+      }}).then(res => {
+        let data = res;
+        wx.requestPayment({
+          appId: data.appId,
+          timeStamp: data.timeStamp,
+          nonceStr: data.nonceStr,
+          package: data.package,
+          signType: data.signType,
+          paySign: data.paySign,
+          success: res => {
+            this.on_pay_success();
+          },
+          fail: res => {
+          },
+          complete: res => {
+          }
+        })
+      }).then(res => {
+        console.log(res);
+      });
+  },
+  //支付成功的回调
+  on_pay_success() {
+    wx.showToast({
+        title: '恭喜您成为会员',
+        icon: 'success',
+        duration: 3000
+    });
+    this.globalData.main_list = null;
+    this.globalData.userInfo = null;
+    //支付完成 重新呼起小程序 关闭圈闭页面
+    wx.reLaunch({
+      url: '/pages/index/index'
+    })
+  },
+
+
   globalData: {
     api_base: 'https://www.toboedu.com/api/english_mini',
     openid: null,
     userInfo: null,
     main_list: null,
+    loading: 0,
   }
 })
 

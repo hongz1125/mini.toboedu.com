@@ -8,17 +8,20 @@ page{
 .main_box{
 }
 .main_box__scroll{
-  width:calc(100vw - 20px);
-  padding:10px;
+  min-height: 100vh;
   background:#575757;
 }
 
 .main_list {
   display: flex;
+  width:calc(100vw - 20px);
+  padding-left:10px;
   flex-wrap:wrap;
   justify-content:space-between;
   overflow:hidden;
 }
+
+
 
 .main_list__li{
   width:46vw;
@@ -27,6 +30,10 @@ page{
   background-size:100% auto;
   background-repeat: no-repeat;
   position: relative;
+}
+
+.main_list__li.is_lock .main_list__lock{
+  display: block;
 }
 
 .main_list__bg{
@@ -62,6 +69,25 @@ page{
   color:#fff;
   font-size:16px;
 }
+.main_list__lock{
+  display: none;
+  position:absolute;
+  width:16vw;
+  height:16vw;
+  left:50%;
+  top:12vw;
+  margin-left:-8vw;
+  background:#000;
+  border:.3vw solid #fff;
+  border-radius: 100%;
+  line-height:16vw;
+  opacity: .4;
+}
+.main_list__lock:before{
+  color:#fff;
+  font-size:7vw;
+}
+
 
 
 

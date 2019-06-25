@@ -1,6 +1,6 @@
 <view>
   <view wx:if="{{!userInfo}}">
-    <view class="iconfont tb-guanwangicon31334 head"></view>
+    <view class="iconfont tb_guanwangicon31334 head"></view>
     <button class="login" type="primary" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">微信授权登陆</button>
   </view>
   <view wx:if="{{userInfo}}">
