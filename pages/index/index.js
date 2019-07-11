@@ -21,13 +21,10 @@ Page({
       console.log(err);
     });
   },
-  onShow() {
-    console.log(app)
-  },
   go_list: function (dom) {
     if(!this.data.userInfo){
       wx.showToast({
-        title: '请先登陆',
+        title: '请先登陆 (右上角)',
         icon:"none"
       });
       return;

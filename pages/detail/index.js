@@ -7,6 +7,8 @@ const app = getApp();
 
 Page({
   data: {
+    userInfo: null,
+
     hide_en: true,
     status: {
       no_music: false,
@@ -23,9 +25,9 @@ Page({
     music: null,
   },
   onLoad(options) {
-
-
-
+    this.setData({
+      userInfo: app.globalData.userInfo
+    });
     app.get_main_list().then(res => {
       let list = app.globalData.main_list;
       let list_index = list.findIndex(item => item.id == options.id);
@@ -130,6 +132,7 @@ Page({
   },
 
   do_play(num) {
+    app.analyse('times_word');
     this.setData({
       child_index: num,
       child: this.data.list_child[num]

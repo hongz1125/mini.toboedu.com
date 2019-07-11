@@ -17,6 +17,10 @@
         <view class="weui-cell__bd">地区</view>
         <view class="weui-cell__ft">{{userInfo.country + ' ' + userInfo.province + ' ' + userInfo.city}}</view>
       </view>
+      <view class="weui-cell">
+        <view class="weui-cell__bd">经验值</view>
+        <view class="weui-cell__ft">{{userInfo.times_word}}</view>
+      </view>
     </view>
 
     <view class="weui-panel weui-panel_access" wx:if="{{userInfo.is_vip != 1}}">
@@ -27,11 +31,6 @@
       </view>
     </view>
 
-
-
   </view>
-</view>
-<view class="weui-footer footer">
-  <view class="weui-footer__text">Copyright © 2019 TOBO.EDU</view>
 </view>
 </view>

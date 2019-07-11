@@ -1,13 +1,18 @@
-import { ajax ,to_link} from 'utils/util';
+import { ajax, to_link } from 'utils/util';
 
 App({
-  onLaunch() { console.log(`on launch！`); },
-  onShow() { console.log('App onShow'); },
-  onHide() { console.log('App onHide'); },
+  onLaunch() {
+    console.log(`on launch！`);
+    this.analyse('times_login');
+  },
   //每个页面onload的时候需要执行
   on_ready() {
     return new Promise((resolve, reject) => {
-      this.get_code().then(this.get_login).then(this.get_main_list).then(resolve).catch(reject);
+      this.get_code()
+        .then(this.get_login)
+        .then(this.get_main_list)
+        .then(resolve)
+        .catch(reject);
     });
   },
   //获取code
@@ -82,33 +87,34 @@ App({
       url: `/pay`,
       data: {
         openid: this.globalData.openid
-      }}).then(res => {
-        let data = res;
-        wx.requestPayment({
-          appId: data.appId,
-          timeStamp: data.timeStamp,
-          nonceStr: data.nonceStr,
-          package: data.package,
-          signType: data.signType,
-          paySign: data.paySign,
-          success: res => {
-            this.on_pay_success();
-          },
-          fail: res => {
-          },
-          complete: res => {
-          }
-        })
-      }).then(res => {
-        console.log(res);
-      });
+      }
+    }).then(res => {
+      let data = res;
+      wx.requestPayment({
+        appId: data.appId,
+        timeStamp: data.timeStamp,
+        nonceStr: data.nonceStr,
+        package: data.package,
+        signType: data.signType,
+        paySign: data.paySign,
+        success: res => {
+          this.on_pay_success();
+        },
+        fail: res => {
+        },
+        complete: res => {
+        }
+      })
+    }).then(res => {
+      console.log(res);
+    });
   },
   //支付成功的回调
   on_pay_success() {
     wx.showToast({
-        title: '恭喜您成为会员',
-        icon: 'success',
-        duration: 3000
+      title: '恭喜您成为会员',
+      icon: 'success',
+      duration: 3000
     });
     this.globalData.main_list = null;
     this.globalData.userInfo = null;
@@ -117,7 +123,19 @@ App({
       url: '/pages/index/index'
     })
   },
-
+  //统计
+  analyse(action) {
+    if (!this.globalData.userInfo) return;
+    ajax({
+      no_loading: 1,
+      method: "get",
+      url: '/analyse',
+      data: {
+        id: this.globalData.userInfo.id,
+        action: action
+      }
+    })
+  },
 
   globalData: {
     api_base: 'https://www.toboedu.com/api/english_mini',

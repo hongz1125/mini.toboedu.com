@@ -90,10 +90,6 @@ page{
 
 
 
-
-
-
-
 .footer{
-  padding:15vw 0;
+  padding:8vw 0;
 }

@@ -11,7 +11,7 @@ Component({
   properties: {
     page_name: {
       type: String,
-      value: 'home',
+      value: '',
     }
   },
   data: {
