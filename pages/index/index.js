@@ -36,16 +36,21 @@ Page({
     }
     to_link(null, `/pages/list/index?id=${get_data(dom).item.id}`)
   },
-  do_lock() {  
+  do_lock() {
+    //直接支付 被举报了 修改成 跳转支付  
     let param = {
       title:'提示',
       content:'成为会员可以解锁全部单词卡',
       cancelText:'取消',
-      confirmText:'解锁',
+      confirmText:'购买会员',
     }; 
     show_modal(param).then(() => {
-      app.on_pay();
+      to_link(null,'/pages/user/index');
+    //   app.on_pay();
     }).catch(() => { })
+
+    
+
   }
 
 })
