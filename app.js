@@ -101,6 +101,11 @@ App({
           this.on_pay_success();
         },
         fail: res => {
+          wx.showToast({
+            title: JSON.stringify(res),
+            icon: 'success',
+            duration: 3000
+          });
         },
         complete: res => {
         }
