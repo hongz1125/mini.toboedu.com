@@ -1,0 +1,15 @@
+<!-- index.wxml -->
+<view class="main_box">
+  <scroll-view scroll-y class="main_box__scroll">
+    <view class="tapBox">
+      <view class="{{selected == 7 ? 'selected' : ''}}" bindtap="get_rank_list" data-day="7">周排行</view> 
+      <view class="{{selected == 30 ? 'selected' : ''}}" bindtap="get_rank_list" data-day="30">月度排行</view> 
+      <view class="{{selected == 365 ? 'selected' : ''}}" bindtap="get_rank_list"data-day="365">年度排行</view>
+    </view>
+    <view class="list">
+      <view wx:for="{{list}}" wx:key="index" wx:for-item="item" class="list__li {{userInfo.id == item.id ? 'selected' : ''}}" >
+        <text class="list__li__no">{{index + 1}}、</text> <image class="list__li__img" src="{{item.avatar}}"></image> <text class="list__li__name">{{item.nickname || "没有昵称"}}</text><text class="list__li__word">{{item.times_word}}</text>
+      </view>
+    </view>
+  </scroll-view>
+</view>

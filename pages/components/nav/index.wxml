@@ -1,10 +1,12 @@
 <view class="nav">
-  <view wx:if="{{page_name != 'home'}}" bindtap="go_home" class="nav__ico iconfont tb_shouye" ></view>
-  <view class="nav__ico iconfont tb_icon_service" ><button class="weui-btn mini-btn clarity" type="primary" open-type="feedback">意见反馈</button></view>
-  <view wx:if="{{!userInfo}}" class="ico_login nav__ico iconfont tb_icon_signal">
+  <view wx:if="{{page_name != 'home'}}" bindtap="go_home" class="nav__ico nav__home iconfont tb_shouyehomefangzi" ></view>
+  <view class="nav__ico nav__kefy iconfont tb_kefu" ><button class="weui-btn mini-btn clarity" type="primary" open-type="feedback">意见反馈</button></view>
+  <view wx:if="{{!userInfo}}" class="ico_login nav__ico iconfont tb_yonghu">
     <button class="login" type="primary" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="on_userinfo">微信授权登陆</button>
   </view>
-  <view bindtap="go_user" wx:if="{{userInfo}}" class="ico_login nav__ico iconfont tb_icon_signal">
+  <view class="nav__ico iconfont tb_meiri" ></view>
+  <view bindtap="go_rank" class="nav__ico iconfont tb_paihang"></view>
+  <view bindtap="go_user" wx:if="{{userInfo}}" class="ico_login nav__ico iconfont tb_yonghu">
     <image class="pic" src="{{userInfo.avatar}}"></image>
     <image class="vip" src="/image/hat.png" wx:if="{{userInfo.is_vip == 1}}" />
   </view>

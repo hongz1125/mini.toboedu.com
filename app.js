@@ -3,6 +3,7 @@ import { ajax, to_link } from 'utils/util';
 App({
   onLaunch() {
     console.log(`on launch！`);
+    this.get_system();
     this.analyse('times_login');
   },
   //每个页面onload的时候需要执行
@@ -41,6 +42,9 @@ App({
         }
       }).then(res => {
         this.globalData.openid = res.wx_openid;
+        if(res.user_info){
+          res.user_info.is_vip = res.user_info.is_vip || this.globalData.is_ios
+        }
         this.globalData.userInfo = res.user_info;
         resolve();
       }).catch(err => {
@@ -58,6 +62,7 @@ App({
           wx_openid: this.globalData.openid,
         }
       }).then(res => {
+        res.is_vip = res.is_vip || this.globalData.is_ios
         this.globalData.userInfo = res;
         resolve();
       }).catch(reject);
@@ -141,8 +146,22 @@ App({
       }
     })
   },
+  //获取系统信息
+  get_system(){
+      try {
+        const res = wx.getSystemInfoSync()
+        this.globalData.is_ios = res.system.toLowerCase().indexOf('ios') > -1 ? 1:0;
+      } catch (e) {
+        // Do something when catch error
+      }
+  },
+
+
+
+
 
   globalData: {
+    is_ios:true,
     api_base: 'https://www.toboedu.com/api/english_mini',
     openid: null,
     userInfo: null,

@@ -11,6 +11,7 @@ Page({
   },
   onLoad(options) {
     app.on_ready().then(res => {
+      console.log(app.globalData.userInfo.is_vip)
       this.setData({
         userInfo: app.globalData.userInfo,
       });

@@ -4,7 +4,6 @@ const app = getApp()
 Page({
   data: {
     userInfo: null,
-
     id: null,
     list: null,
     list_child: null,

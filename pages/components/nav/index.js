@@ -18,14 +18,16 @@ Component({
     userInfo: null,
   },
   methods: {
-    do_login() {
-
+    go_rank() {
+      to_link(null,'/pages/rank/index');
     },
     go_user(){
       to_link(null,'/pages/user/index');
     },
     go_home() {
-      to_link(null,'/pages/index/index');
+      wx.navigateBack({
+        delta: 100
+      })
     },
     on_userinfo: function (e) {
       if(!e.detail.userInfo) return;

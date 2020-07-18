@@ -38,6 +38,7 @@ const loading_hide = () => {
 
 /**
   * @desc 封装微信request 为promise使用
+  * no_loading 是否需要加载中
 **/
 const ajax = (param) => {
   return new Promise((resolve, reject) => {

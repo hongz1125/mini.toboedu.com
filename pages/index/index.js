@@ -7,25 +7,25 @@ Page({
   data: {
     list: null,
     userInfo: null,
-    is_ready:false,
+    is_ready: false,
   },
   onLoad: function () {
     app.on_ready().then(res => {
       this.setData({
         userInfo: app.globalData.userInfo,
         list: app.globalData.main_list,
-        is_ready:true
+        is_ready: true
       });
-      
+
     }).catch(err => {
       console.log(err);
     });
   },
   go_list: function (dom) {
-    if(!this.data.userInfo){
+    if (!this.data.userInfo) {
       wx.showToast({
         title: '请先登陆 (右上角)',
-        icon:"none"
+        icon: "none"
       });
       return;
     }
@@ -39,18 +39,15 @@ Page({
   do_lock() {
     //直接支付 被举报了 修改成 跳转支付  
     let param = {
-      title:'提示',
-      content:'成为会员可以解锁全部单词卡',
-      cancelText:'取消',
-      confirmText:'购买会员',
-    }; 
+      title: '提示',
+      content: '成为会员可以解锁全部单词卡',
+      cancelText: '取消',
+      confirmText: '购买会员',
+    };
     show_modal(param).then(() => {
-      to_link(null,'/pages/user/index');
-    //   app.on_pay();
+      to_link(null, '/pages/user/index');
+      //   app.on_pay();
     }).catch(() => { })
-
-    
-
   }
 
 })

@@ -9,5 +9,6 @@
         <text class="main_list__text">{{item.en}}</text>
       </view>
     </view>
+        <ad unit-id="adunit-51272ea8d1a01ce2"></ad>
   </scroll-view>
 </view>
