@@ -1,0 +1,33 @@
+.famous{
+  position: fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  top:0;
+  background-size:cover;
+  background-position: center center;
+  background-color:#333;
+}
+
+.detail{
+  position:fixed;
+  bottom:30px;
+  left:10px;
+  right:10px;
+  font-size:4vw;
+  color:#fff;
+  line-height:6vw;
+}
+.detail__date{
+  font-size:8vw;
+  font-family: "Helvetica Neue","Helvetica","Arial",sans-serif;
+  margin-bottom:20px;
+  opacity: .8;
+}
+.detail__content{
+  margin-bottom:10px;
+  font-size:5vw;
+}
+.detail__author{
+  text-align:right;
+}

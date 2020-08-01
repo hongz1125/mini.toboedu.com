@@ -4,7 +4,7 @@
   <view wx:if="{{!userInfo}}" class="ico_login nav__ico iconfont tb_yonghu">
     <button class="login" type="primary" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="on_userinfo">微信授权登陆</button>
   </view>
-  <view class="nav__ico iconfont tb_meiri" ></view>
+  <view bindtap="go_famous" class="nav__ico iconfont tb_meiri" ></view>
   <view bindtap="go_rank" class="nav__ico iconfont tb_paihang"></view>
   <view bindtap="go_user" wx:if="{{userInfo}}" class="ico_login nav__ico iconfont tb_yonghu">
     <image class="pic" src="{{userInfo.avatar}}"></image>

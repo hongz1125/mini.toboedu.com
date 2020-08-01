@@ -1,3 +1,4 @@
+const moment = require('./moment.min');
 
 
 let api_base = 'https://www.toboedu.com/api/english_mini';
@@ -95,6 +96,7 @@ const show_modal = (data) => {
 
 
 module.exports = {
+  moment,
   formatTime: formatTime,
   get_data: get_data,
   loading_show,

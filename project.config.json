@@ -69,6 +69,13 @@
 					"id": -1,
 					"name": "pages/rank/index",
 					"pathName": "pages/rank/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/famous/index",
+					"pathName": "pages/famous/index",
 					"scene": null
 				}
 			]

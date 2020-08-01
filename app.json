@@ -4,6 +4,7 @@
     "pages/list/index",
     "pages/detail/index",
     "pages/rank/index",
+    "pages/famous/index",
     "pages/user/index"
   ],
   "window": {

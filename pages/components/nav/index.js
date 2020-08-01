@@ -21,6 +21,9 @@ Component({
     go_rank() {
       to_link(null,'/pages/rank/index');
     },
+    go_famous(){
+      to_link(null,'/pages/famous/index');
+    },
     go_user(){
       to_link(null,'/pages/user/index');
     },

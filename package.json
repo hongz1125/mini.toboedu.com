@@ -1,17 +1,28 @@
 {
   "name": "wx_001",
   "version": "1.0.0",
-  "description": "",
+  "description": "为学龄前小孩学习英语提供工具 ======= pm2 start serve/index --name \"英语\"",
   "main": "app.js",
-  "dependencies": {},
+  "dependencies": {
+    "hammerjs": "^2.0.8"
+  },
   "devDependencies": {
     "express": "^4.16.3",
     "http": "0.0.0",
+    "moment": "^2.27.0",
     "mysql": "^2.16.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hongz1125/mini_program.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hongz1125/mini_program/issues"
+  },
+  "homepage": "https://github.com/hongz1125/mini_program#readme"
 }
