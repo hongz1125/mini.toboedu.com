@@ -27,7 +27,7 @@ Page({
     }).then(res => {
       wx.hideLoading();
       this.setData({
-        showDate: moment(this.data.time).format("YYYY MMMM DD dddd"),
+        showDate: moment(this.data.time).format("YYYY / MM / DD"),
         detail: res,
       })
       this.data.is_auto && this.on_play();
