@@ -6,7 +6,7 @@
   <view wx:if="{{userInfo}}">
     <view class="head_box">
       <image class="head_box__pic" src="{{userInfo.avatar}}" />
-      <image class="head_box__hat" src="/image/hat.png" wx:if="{{userInfo.is_vip == 1}}" />
+      <image class="head_box__hat" src="https://static.toboedu.com/date/20211026/03fc8b6e30a418db45ffe2bda86b7c72.png" wx:if="{{userInfo.is_vip == 1}}" />
     </view>
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell">

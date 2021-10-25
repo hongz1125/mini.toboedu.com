@@ -5,7 +5,7 @@
     <view class="main_list" wx:if="{{list_child}}">
       <view class="main_list__li" wx:for="{{list_child}}" wx:key="index" wx:for-item="item" data-id="{{item.id}}" bindtap="go_detail">
         <view class="main_list__bg2"></view>
-        <image class="main_list__img" mode="scaleToFill" src="{{item.src}}"></image>
+        <image class="main_list__img" mode="scaleToFill" src="{{item.src}}!jpg"></image>
         <text class="main_list__text">{{item.en}}</text>
       </view>
     </view>
