@@ -1,10 +1,10 @@
-import { ajax, to_link } from 'utils/util';
+import { ajax, to_link } from "utils/util";
 
 App({
   onLaunch() {
     console.log(`on launch！`);
     this.get_system();
-    this.analyse('times_login');
+    this.analyse("times_login");
   },
   //每个页面onload的时候需要执行
   on_ready() {
@@ -24,10 +24,10 @@ App({
           resolve(res.code);
         },
         fail(err) {
-          reject(new Error('wx.login'))
-        }
-      })
-    })
+          reject(new Error("wx.login"));
+        },
+      });
+    });
   },
   //获取openid 与 用户信息
   get_login(code) {
@@ -38,19 +38,21 @@ App({
       ajax({
         url: `/wxlogin`,
         data: {
-          code: code
-        }
-      }).then(res => {
-        this.globalData.openid = res.wx_openid;
-        if(res.user_info){
-          res.user_info.is_vip = res.user_info.is_vip || this.globalData.is_ios
-        }
-        this.globalData.userInfo = res.user_info;
-        resolve();
-      }).catch(err => {
-        reject(err)
-      });
-    })
+          code: code,
+        },
+      })
+        .then((res) => {
+          this.globalData.openid = res.wx_openid;
+          // if(res.user_info){
+          //   res.user_info.is_vip = res.user_info.is_vip || this.globalData.is_ios
+          // }
+          this.globalData.userInfo = res.user_info;
+          resolve();
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
   },
   //写入用户信息
   put_logintime(userInfo) {
@@ -60,13 +62,15 @@ App({
         data: {
           ...userInfo,
           wx_openid: this.globalData.openid,
-        }
-      }).then(res => {
-        res.is_vip = res.is_vip || this.globalData.is_ios
-        this.globalData.userInfo = res;
-        resolve();
-      }).catch(reject);
-    })
+        },
+      })
+        .then((res) => {
+          // res.is_vip = res.is_vip || this.globalData.is_ios;
+          this.globalData.userInfo = res;
+          resolve();
+        })
+        .catch(reject);
+    });
   },
 
   //获取主要列表
@@ -77,61 +81,64 @@ App({
       }
       //获取数据
       ajax({
-        url: `/all`
-      }).then(res => {
-        this.globalData.main_list = res;
-        resolve();
-      }).then(res => {
-        reject(new Error(res));
+        url: `/all`,
       })
-    })
+        .then((res) => {
+          this.globalData.main_list = res;
+          resolve();
+        })
+        .then((res) => {
+          reject(new Error(res));
+        });
+    });
   },
   //全站支付页面
   on_pay() {
     ajax({
       url: `/pay`,
       data: {
-        openid: this.globalData.openid
-      }
-    }).then(res => {
-      let data = res;
-      wx.requestPayment({
-        appId: data.appId,
-        timeStamp: data.timeStamp,
-        nonceStr: data.nonceStr,
-        package: data.package,
-        signType: data.signType,
-        paySign: data.paySign,
-        success: res => {
-          this.on_pay_success();
-        },
-        fail: res => {
-          wx.showToast({
-            title: JSON.stringify(res),
-            icon: 'success',
-            duration: 3000
-          });
-        },
-        complete: res => {
-        }
+        openid: this.globalData.openid,
+      },
+    })
+      .then((res) => {
+        let data = res;
+        wx.requestPayment({
+          appId: data.appId,
+          timeStamp: data.timeStamp,
+          nonceStr: data.nonceStr,
+          package: data.package,
+          signType: data.signType,
+          paySign: data.paySign,
+          success: (res) => {
+            this.on_pay_success();
+          },
+          fail: (res) => {
+            wx.showToast({
+              title: JSON.stringify(res),
+              icon: "success",
+              duration: 3000,
+            });
+          },
+          complete: (res) => {},
+        });
       })
-    }).then(res => {
-      console.log(res);
-    });
+      .then((res) => {
+        console.log(res);
+      });
   },
   //支付成功的回调
   on_pay_success() {
     wx.showToast({
-      title: '恭喜您成为会员',
-      icon: 'success',
-      duration: 3000
+      title: "恭喜您成为会员",
+      icon: "success",
+      duration: 3000,
     });
     this.globalData.main_list = null;
     this.globalData.userInfo = null;
     //支付完成 重新呼起小程序 关闭圈闭页面
     wx.reLaunch({
-      url: '/pages/index/index'
-    })
+      url: "/pages/index/index",
+    });
   },
   //统计
   analyse(action) {
@@ -139,34 +146,30 @@ App({
     ajax({
       no_loading: 1,
       method: "get",
-      url: '/analyse',
+      url: "/analyse",
       data: {
         id: this.globalData.userInfo.id,
-        action: action
-      }
-    })
+        action: action,
+      },
+    });
   },
   //获取系统信息
-  get_system(){
-      try {
-        const res = wx.getSystemInfoSync()
-        this.globalData.is_ios = res.system.toLowerCase().indexOf('ios') > -1 ? 1:0;
-      } catch (e) {
-        // Do something when catch error
-      }
+  get_system() {
+    try {
+      const res = wx.getSystemInfoSync();
+      this.globalData.is_ios =
+        res.system.toLowerCase().indexOf("ios") > -1 ? 1 : 0;
+    } catch (e) {
+      // Do something when catch error
+    }
   },
 
-
-
-
-
   globalData: {
-    is_ios:true,
-    api_base: 'https://www.toboedu.com/api/english_mini',
+    is_ios: true,
+    api_base: "https://www.toboedu.com/api/english_mini",
     openid: null,
     userInfo: null,
     main_list: null,
     loading: 0,
-  }
-})
-
+  },
+});

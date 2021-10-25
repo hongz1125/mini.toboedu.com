@@ -27,7 +27,7 @@
       <view class="weui-media-box weui-media-box_text">
         <view class="weui-media-box__title weui-media-box__title_in-text">购买会员</view>
         <view class="weui-media-box__desc">成为会员即可解锁全部图集，有亮点，并可以点亮头像。</view>
-        <view class="pay_btn"><button class="weui-btn mini-btn" type="primary"  bindtap="on_pay" size="mini">支付1元</button>
+        <view class="pay_btn"><button class="weui-btn mini-btn" type="primary"  bindtap="on_pay" size="mini">支付9.9元</button>
       </view>
     </view>
 
