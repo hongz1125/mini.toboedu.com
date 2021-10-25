@@ -1,6 +1,6 @@
 <!-- index.wxml -->
 <view class="famous"bindtouchstart='touchStart' bindtouchmove='touchMove' bindtouchend='touchEnd' bindtouchcancel="touchCancel">
-  <image class="img" webp="true" mode="aspectFill" src="{{detail.img}}"></image>
+  <image class="img" webp="true" mode="aspectFill" src="{{detail.img}}!jpg"></image>
   <view class="detail" >
     <view class="detail__content" bindtouchstart="on_play" bindtouchmove="cancel" bindtouchend='cancel'>{{detail.content}}</view>
     <view class="detail__translation">{{detail.translation}}</view>
