@@ -1,19 +1,16 @@
-import { ajax, to_link } from "utils/util";
+import { ajax, to_link } from 'utils/util';
 
 App({
   onLaunch() {
     console.log(`on launch！`);
     this.get_system();
-    this.analyse("times_login");
+    this.analyse('times_login');
+    console.log(wx.getUserProfile, 999);
   },
   //每个页面onload的时候需要执行
   on_ready() {
     return new Promise((resolve, reject) => {
-      this.get_code()
-        .then(this.get_login)
-        .then(this.get_main_list)
-        .then(resolve)
-        .catch(reject);
+      this.get_code().then(this.get_login).then(this.get_main_list).then(resolve).catch(reject);
     });
   },
   //获取code
@@ -24,7 +21,7 @@ App({
           resolve(res.code);
         },
         fail(err) {
-          reject(new Error("wx.login"));
+          reject(new Error('wx.login'));
         },
       });
     });
@@ -41,15 +38,17 @@ App({
           code: code,
         },
       })
-        .then((res) => {
+        .then(res => {
           this.globalData.openid = res.wx_openid;
-          // if(res.user_info){
-          //   res.user_info.is_vip = res.user_info.is_vip || this.globalData.is_ios
-          // }
+          this.globalData.is_free = res.is_free;
+          this.globalData.money = res.money;
           this.globalData.userInfo = res.user_info;
+
+          console.log(`是否免费：`, this.globalData.is_free);
+          console.log(`产品定价：`, this.globalData.money);
           resolve();
         })
-        .catch((err) => {
+        .catch(err => {
           reject(err);
         });
     });
@@ -64,7 +63,7 @@ App({
           wx_openid: this.globalData.openid,
         },
       })
-        .then((res) => {
+        .then(res => {
           // res.is_vip = res.is_vip || this.globalData.is_ios;
           this.globalData.userInfo = res;
           resolve();
@@ -72,7 +71,16 @@ App({
         .catch(reject);
     });
   },
-
+  // 计算是否是免费
+  comp_free(free) {
+    if (free || this.globalData.is_free) {
+      return true;
+    }
+    if (this.globalData.userInfo && this.globalData.userInfo.is_vip) {
+      return true;
+    }
+    return false;
+  },
   //获取主要列表
   get_main_list() {
     return new Promise((resolve, reject) => {
@@ -83,11 +91,14 @@ App({
       ajax({
         url: `/all`,
       })
-        .then((res) => {
-          this.globalData.main_list = res;
+        .then(res => {
+          this.globalData.main_list = res.reduce((sam, item) => {
+            item.is_free = this.comp_free(!item.is_vip);
+            return sam.concat(item);
+          }, []);
           resolve();
         })
-        .then((res) => {
+        .then(res => {
           reject(new Error(res));
         });
     });
@@ -100,7 +111,7 @@ App({
         openid: this.globalData.openid,
       },
     })
-      .then((res) => {
+      .then(res => {
         let data = res;
         wx.requestPayment({
           appId: data.appId,
@@ -109,35 +120,35 @@ App({
           package: data.package,
           signType: data.signType,
           paySign: data.paySign,
-          success: (res) => {
+          success: res => {
             this.on_pay_success();
           },
-          fail: (res) => {
+          fail: res => {
             wx.showToast({
               title: JSON.stringify(res),
-              icon: "success",
+              icon: 'success',
               duration: 3000,
             });
           },
-          complete: (res) => {},
+          complete: res => {},
         });
       })
-      .then((res) => {
+      .then(res => {
         console.log(res);
       });
   },
   //支付成功的回调
   on_pay_success() {
     wx.showToast({
-      title: "恭喜您成为会员",
-      icon: "success",
+      title: '恭喜您成为会员',
+      icon: 'success',
       duration: 3000,
     });
     this.globalData.main_list = null;
     this.globalData.userInfo = null;
     //支付完成 重新呼起小程序 关闭圈闭页面
     wx.reLaunch({
-      url: "/pages/index/index",
+      url: '/pages/index/index',
     });
   },
   //统计
@@ -145,8 +156,8 @@ App({
     if (!this.globalData.userInfo) return;
     ajax({
       no_loading: 1,
-      method: "get",
-      url: "/analyse",
+      method: 'get',
+      url: '/analyse',
       data: {
         id: this.globalData.userInfo.id,
         action: action,
@@ -157,16 +168,17 @@ App({
   get_system() {
     try {
       const res = wx.getSystemInfoSync();
-      this.globalData.is_ios =
-        res.system.toLowerCase().indexOf("ios") > -1 ? 1 : 0;
+      this.globalData.is_ios = res.system.toLowerCase().indexOf('ios') > -1 ? 1 : 0;
     } catch (e) {
       // Do something when catch error
     }
   },
 
   globalData: {
+    money: 1,
+    is_free: 1,
     is_ios: true,
-    api_base: "https://www.toboedu.com/api/english_mini",
+    api_base: 'https://www.toboedu.com/api/english_mini',
     openid: null,
     userInfo: null,
     main_list: null,
