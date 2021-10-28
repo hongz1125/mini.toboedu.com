@@ -5,7 +5,6 @@ App({
     console.log(`on launch！`);
     this.get_system();
     this.analyse('times_login');
-    console.log(wx.getUserProfile, 999);
   },
   //每个页面onload的时候需要执行
   on_ready() {
