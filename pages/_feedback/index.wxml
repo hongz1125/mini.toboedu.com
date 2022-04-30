@@ -1,5 +1,0 @@
-<view>
-  <view class="feedback">
-    <button class="weui-btn mini-btn clarity" type="primary" open-type="feedback">意见反馈</button>
-  </view>
-</view>
