@@ -4,19 +4,14 @@ export default {
   globalData: {
     is_ios: true,
     loading: 0,
+    is_ready: false,
+    ajax,
   },
   onLaunch: function () {
     this.get_system();
-    console.log(this.$store);
     console.log("App Launch");
   },
   onShow: function () {
-    // this.$store.dispatch(`app/GET_CODE`).then((res) => {
-    //   this.$store.dispatch(`app/GET_USERINFO`, {
-    //     code: this.$store.state.app.code,
-    //   });
-    // });
-    // this.$store.dispatch(`app/GET_MAIN_LIST`);
     console.log("App Show");
   },
   onHide: function () {
@@ -36,12 +31,16 @@ export default {
   methods: {
     //每个页面onload的时候需要执行
     on_ready() {
-      console.log(this, 111111);
       return new Promise((resolve, reject) => {
-        this.get_code()
+        this.get_setting()
+          .then(this.get_code)
           .then(this.get_login)
           .then(this.get_main_list)
-          .then(resolve)
+          .then(() => {
+            console.log("App isReady");
+            this.is_ready = true;
+            resolve();
+          })
           .catch(reject);
       });
     },
@@ -57,6 +56,10 @@ export default {
           },
         });
       });
+    },
+    // 获取应用配置
+    get_setting() {
+      return this.$store.dispatch(`app/GET_SETTING`);
     },
     //获取openid 与 用户信息
     get_login(code) {
@@ -184,10 +187,19 @@ export default {
         const res = wx.getSystemInfoSync();
         let isIos = res.system.toLowerCase().indexOf("ios") > -1 ? 1 : 0;
         this.$store.commit(`app/SET_ISIOS`, isIos);
-        console.log(this.$store.state.app.isIos, 9999);
       } catch (e) {
         // Do something when catch error
       }
+    },
+    // 获取系统配置
+    getSetting() {
+      ajax({
+        method: "get",
+        url: "/setting",
+        data: {},
+      }).then((res) => {
+        console.log(111);
+      });
     },
   },
 };

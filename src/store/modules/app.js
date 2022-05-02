@@ -6,6 +6,7 @@ const state = {
   isVip: true,
   main_list: null,
   isIos: null,
+  setting: null,
 };
 
 const mutations = {
@@ -20,6 +21,9 @@ const mutations = {
   },
   SET_ISIOS(state, param) {
     state.isIos = param;
+  },
+  SET_SETTING(state, param) {
+    state.setting = param;
   },
 };
 const actions = {
@@ -42,6 +46,17 @@ const actions = {
   GET_MAIN_LIST({ commit }, data) {
     return ajax({ url: `/all`, data }).then((res) => {
       commit("SET_MAIN_LIST", res);
+    });
+  },
+  GET_SETTING({ commit }, data) {
+    return new Promise((resolve, reject) => {
+      if (state.setting) {
+        resolve();
+      }
+      ajax({ url: `/setting`, data }).then((res) => {
+        commit("SET_SETTING", res);
+        resolve();
+      });
     });
   },
 };

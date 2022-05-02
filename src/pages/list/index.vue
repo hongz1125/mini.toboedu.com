@@ -19,7 +19,7 @@
           <view class="main_list__text">{{ item.cn }}</view>
         </view>
       </view>
-      <ad unit-id="adunit-51272ea8d1a01ce2"></ad>
+      <ad v-if="$store.getters.is_ad" unit-id="adunit-51272ea8d1a01ce2"></ad>
     </scroll-view>
   </view>
 </template>

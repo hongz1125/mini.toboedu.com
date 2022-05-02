@@ -61,7 +61,9 @@
     "versionCode": 1,
     "minPlatformVersion": 1070,
     "icon": "/static/logo.png",
-    "deviceTypeList": ["phone"]
+    "deviceTypeList": [
+      "phone"
+    ]
   },
   "quickapp-native": {
     "icon": "/static/logo.png",
@@ -73,7 +75,8 @@
     ]
   },
   "mp-weixin": {
-    /* 微信小程序特有相关 */ "appid": "",
+    "appid": "",
+    "lazyCodeLoading": "requiredComponents",
     "setting": {
       "urlCheck": false
     },

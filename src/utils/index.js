@@ -1,6 +1,8 @@
 let loading = 0;
+
+// 不支持本地调试
 let api_base = "https://www.toboedu.com/api/english_mini";
-// let api_base = "http://127.0.0.1:8808/api/english_mini";
+
 const loading_show = () => {
   loading++;
   wx.showLoading({
@@ -42,4 +44,4 @@ export const goLink = (url) => {
   });
 };
 
-export const moment = require("./moment.min");
+export const moment = require("moment");

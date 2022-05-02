@@ -56,7 +56,7 @@
               @click="on_pay"
               size="mini"
             >
-              支付9.9元
+              支付{{ vip_price }}元
             </button>
           </view>
         </view>
@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 export default {
   name: "app.vue",
   data() {
@@ -74,6 +74,7 @@ export default {
       canIUseGetUserProfile: false,
     };
   },
+
   onLoad() {
     if (wx.getUserProfile) {
       this.canIUseGetUserProfile = true;
@@ -89,6 +90,9 @@ export default {
   computed: {
     userInfo() {
       return this.$store.state.app.userInfo;
+    },
+    vip_price() {
+      return this.$store.getters.vip_price / 100;
     },
     ...mapState("app", ["isIos"]),
   },
@@ -153,6 +157,7 @@ export default {
 .head_box__pic {
   width: 30vw;
   height: 30vw;
+  border-radius: 100%;
 }
 
 .head_box__hat {

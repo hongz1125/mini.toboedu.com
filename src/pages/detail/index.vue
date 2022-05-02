@@ -46,6 +46,8 @@
 </template>
 
 <script>
+import { ajax } from "@/utils";
+
 export default {
   data() {
     return {
@@ -96,8 +98,15 @@ export default {
     },
     on_next(num) {
       this.do_play(num);
+      this.onAnalyse();
     },
-
+    onAnalyse() {
+      let data = {
+        user_id: this.$store.getters.user_id,
+      };
+      ajax({ url: `/analyse`, data }).then();
+      this.$store.state.app.userInfo.times_word++;
+    },
     do_play(num) {
       this.detail = this.list.children[num];
       this.detailIndex = num;
