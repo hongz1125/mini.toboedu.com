@@ -3,9 +3,8 @@ import { ajax } from "@/utils";
 const state = {
   code: null,
   userInfo: null,
-  isVip: true,
   main_list: null,
-  isIos: null,
+  is_ios: false,
   setting: null,
 };
 
@@ -20,7 +19,7 @@ const mutations = {
     state.userInfo = param;
   },
   SET_ISIOS(state, param) {
-    state.isIos = param;
+    state.is_ios = param;
   },
   SET_SETTING(state, param) {
     state.setting = param;
@@ -39,8 +38,8 @@ const actions = {
     });
   },
   GET_USERINFO({ commit }, data) {
-    return ajax({ url: `/wxlogin`, data }).then((res) => {
-      commit("SET_USERINFO", res.user_info);
+    return ajax({ url: `/userinfo`, data }).then((res) => {
+      commit("SET_USERINFO", res);
     });
   },
   GET_MAIN_LIST({ commit }, data) {
@@ -48,10 +47,11 @@ const actions = {
       commit("SET_MAIN_LIST", res);
     });
   },
-  GET_SETTING({ commit }, data) {
+  GET_SETTING({ commit, state }, data) {
     return new Promise((resolve, reject) => {
       if (state.setting) {
         resolve();
+        return;
       }
       ajax({ url: `/setting`, data }).then((res) => {
         commit("SET_SETTING", res);

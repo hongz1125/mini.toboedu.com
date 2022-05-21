@@ -14,13 +14,13 @@
             <image class="main_list__img" :src="`${item.src}!jpg`"></image>
             <text
               class="main_list__lock iconfont tb_suo"
-              v-if="!(item.is_vip ? userInfo.is_vip : true)"
+              v-if="!(item.is_vip ? is_vip : true)"
             ></text>
           </view>
           <view class="main_list__text">{{ item.cn }}</view>
         </view>
       </view>
-      <ad v-if="$store.getters.is_ad" unit-id="adunit-51272ea8d1a01ce2"></ad>
+      <ad v-if="is_ad" unit-id="adunit-51272ea8d1a01ce2"></ad>
     </scroll-view>
   </view>
 </template>
@@ -35,13 +35,21 @@ export default {
     };
   },
   computed: {
+    is_ad() {
+      return this.$store.getters.is_ad;
+    },
+    is_vip() {
+      return this.$store.getters.is_vip;
+    },
+    is_ios() {
+      return this.$store.getters.is_ios;
+    },
     list() {
       return this.$store.state.app.main_list || [];
     },
     isLogin() {
       return this.$store.state.app.userInfo || false;
     },
-    ...mapState("app", ["isIos"]),
   },
   onLoad() {
     getApp()
@@ -53,7 +61,7 @@ export default {
   onShow() {},
   methods: {
     isItemShow(item) {
-      if (item.is_vip && !this.userInfo.is_vip && this.isIos) {
+      if (item.is_vip && !this.is_vip && this.is_ios) {
         return false;
       } else {
         return true;
@@ -67,7 +75,7 @@ export default {
         });
         return;
       }
-      let is_lock = !(row.is_vip ? this.userInfo.is_vip : true);
+      let is_lock = !(row.is_vip ? this.is_vip : true);
       if (is_lock) {
         this.do_lock();
         return;

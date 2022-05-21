@@ -48,22 +48,15 @@
   "isGameTourist": false,
   "condition": {
     "search": {
-      "list": []
-    },
-    "conversation": {
-      "list": []
-    },
-    "game": {
-      "list": []
-    },
-    "plugin": {
-      "list": []
-    },
-    "gamePlugin": {
-      "list": []
-    },
-    "miniprogram": {
-      "list": []
+      "list": [
+        {
+          "name": "详情页",
+          "pathName": "pages/detail/index",
+          "query": "id=102&cid=24",
+          "launchMode": "default",
+          "scene": null
+        }
+      ]
     }
   }
 }

@@ -1,12 +1,10 @@
 <script>
 import { ajax } from "@/utils";
+
 export default {
-  globalData: {
-    is_ios: true,
-    loading: 0,
-    is_ready: false,
-    ajax,
-  },
+  loading: 0,
+  is_ready: false,
+  videoAd: null,
   onLaunch: function () {
     this.get_system();
     console.log("App Launch");
@@ -27,6 +25,9 @@ export default {
     main_list() {
       return this.$store.state.app.main_list;
     },
+    uid() {
+      return this.$store.getters.uid;
+    },
   },
   methods: {
     //每个页面onload的时候需要执行
@@ -39,6 +40,7 @@ export default {
           .then(() => {
             console.log("App isReady");
             this.is_ready = true;
+            this.initAd();
             resolve();
           })
           .catch(reject);
@@ -84,7 +86,6 @@ export default {
     },
     //写入用户信息
     put_logintime(userInfo) {
-      console.log(userInfo);
       return new Promise((resolve, reject) => {
         ajax({
           url: `/user_login`,
@@ -169,15 +170,14 @@ export default {
       });
     },
     //统计
-    analyse(action) {
-      if (!this.globalData.userInfo) return;
+    analyse() {
+      if (!this.uid) return;
       ajax({
         no_loading: 1,
         method: "get",
         url: "/analyse",
         data: {
-          id: this.globalData.userInfo.id,
-          action: action,
+          uid: this.uid,
         },
       });
     },
@@ -185,8 +185,8 @@ export default {
     get_system() {
       try {
         const res = wx.getSystemInfoSync();
-        let isIos = res.system.toLowerCase().indexOf("ios") > -1 ? 1 : 0;
-        this.$store.commit(`app/SET_ISIOS`, isIos);
+        let is_ios = res.system.toLowerCase().indexOf("ios") > -1 ? 1 : 0;
+        this.$store.commit(`app/SET_ISIOS`, is_ios);
       } catch (e) {
         // Do something when catch error
       }
@@ -197,9 +197,47 @@ export default {
         method: "get",
         url: "/setting",
         data: {},
+      }).then((res) => {});
+    },
+    // 看广告升级成会员
+    onPayAd() {
+      ajax({
+        method: "post",
+        url: "/payAd",
+        data: {
+          uid: this.uid,
+        },
       }).then((res) => {
-        console.log(111);
+        wx.showToast({
+          title: "恭喜您成为会员",
+          icon: "success",
+          duration: 3000,
+        });
+        this.$store
+          .dispatch(`app/GET_USERINFO`, { id: this.uid })
+          .then((res) => {
+            wx.reLaunch();
+          });
       });
+    },
+
+    // 初始化激励广告
+    initAd() {
+      if (wx.createRewardedVideoAd) {
+        this.videoAd = wx.createRewardedVideoAd({
+          adUnitId: "adunit-413fbef94a31f32d",
+        });
+        this.videoAd.onLoad(() => {});
+        this.videoAd.onError((err) => {
+          console.log(`onError`, err);
+        });
+        this.videoAd.onClose((res) => {
+          if (res && res.isEnded) {
+            this.onPayAd();
+            console.log(`正常播放结束，可以下发游戏奖励`);
+          }
+        });
+      }
     },
   },
 };
@@ -208,7 +246,6 @@ export default {
 <style lang="scss">
 @import url("@/common/iconfont.css");
 @import url("@/common/weui.wxss");
-
 .main_list {
   display: flex;
   flex-wrap: wrap;
@@ -257,6 +294,7 @@ export default {
 .headerBox {
   text-align: right;
   width: 100%;
+  height: 72rpx;
   .nav__ico {
     font-size: 7vw;
     line-height: 10vw;
@@ -272,5 +310,9 @@ export default {
 /*每个页面公共css */
 page {
   background-color: #575757;
+}
+
+.stackBox {
+  position: fixed;
 }
 </style>

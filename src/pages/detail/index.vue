@@ -1,46 +1,58 @@
 <template>
   <view class="content">
-    <Nav />
-    <view class="detail_out">
-      <view class="detail">
-        <view class="detail__bg">
-          <image class="detail__img" :src="detail.src"></image>
-          <text
-            class="detail__left iconfont tb_jiantouzuo"
-            v-if="detailIndex > 0"
-            @click="on_next(detailIndex - 1)"
-          ></text>
-          <text
-            class="detail__right iconfont tb_jiantouyou"
-            @click="on_next(detailIndex + 1)"
-            v-if="detailIndex < list.children.length - 1"
-          ></text>
+    <swiper
+      class="swiper"
+      :autoplay="autoplay"
+      :interval="interval"
+      :duration="duration"
+      :current="current"
+      vertical
+      :indicator-dots="control"
+      @change="onChange"
+      v-if="part"
+    >
+      <swiper-item
+        v-for="(item, index) in part"
+        :key="item.id"
+        :data="index"
+        class="swiperItem"
+      >
+        <view class="detail">
+          <view class="detail__bg">
+            <image class="detail__img" :src="item.src"></image>
+          </view>
+          <view class="detail__en" :class="{ opacity: status.hide_text }">
+            <block>{{ item.en }}</block>
+          </view>
+          <view class="detail__ens" :class="{ opacity: status.hide_text }">
+            <block>/{{ item.en_s }}/</block>
+          </view>
+          <view class="detail__btn">
+            <text
+              class="iconfont tb_bofang"
+              @click="on_play(item.music)"
+            ></text>
+            <text
+              class="iconfont tb_yinle"
+              :class="!status.no_music ? '' : 'disabled'"
+              @click="onMusic"
+            ></text>
+            <text
+              class="iconfont tb_ic_autorenew"
+              :class="status.auto_play ? '' : 'disabled'"
+              @click="onAuto(!status.auto_play)"
+            ></text>
+            <text
+              class="iconfont tb_ai-eye"
+              :class="!status.hide_text ? '' : 'disabled'"
+              @click="onTxt"
+            ></text>
+          </view>
         </view>
-        <view class="detail__en" v-if="!status.hide_text">
-          <block>{{ detail.en }}</block>
-        </view>
-        <view class="detail__ens" v-if="!status.hide_text">
-          <block>/{{ detail.en_s }}/</block>
-        </view>
-        <view class="detail__btn">
-          <text class="iconfont tb_bofang" @click="on_play"></text>
-          <text
-            class="iconfont tb_yinle"
-            :class="!status.no_music ? '' : 'disabled'"
-            @click="status.no_music = !status.no_music"
-          ></text>
-          <text
-            class="iconfont tb_ic_autorenew"
-            :class="status.auto_play ? '' : 'disabled'"
-            @click="on_auto_play"
-          ></text>
-          <text
-            class="iconfont tb_ai-eye"
-            :class="!status.hide_text ? '' : 'disabled'"
-            @click="status.hide_text = !status.hide_text"
-          ></text>
-        </view>
-      </view>
+      </swiper-item>
+    </swiper>
+    <view class="stackBox navBox">
+      <Nav />
     </view>
   </view>
 </template>
@@ -51,11 +63,20 @@ import { ajax } from "@/utils";
 export default {
   data() {
     return {
+      current: 0,
+      old: { current: 0 },
+      part: null,
+      control: false,
+      autoplay: false,
+      interval: 2000,
+      duration: 500,
+
       option: null,
       userInfo: null,
       detail: null,
       detailIndex: 0,
       list: null,
+      audio: null,
 
       status: {
         no_music: false,
@@ -74,72 +95,116 @@ export default {
     },
   },
   onLoad(option) {
-    this.option = option;
-    this.getDetail();
+    getApp()
+      .$vm.on_ready()
+      .then(() => {
+        console.log("ready");
+
+        this.option = option;
+
+        this.getList();
+
+        wx.showToast({
+          title: "上下滑动 翻页",
+          icon: "none",
+          duration: 5000,
+        });
+      });
   },
   onUnload() {
     clearTimeout(this.time);
   },
   onShow() {},
+  beforeDestroy() {
+    this.autoplay = false;
+  },
   methods: {
-    getDetail() {
-      this.list = this.main_list.find((item) => item.id == this.option.id);
-
-      this.detailIndex = this.list.children.findIndex(
-        (item) => item.id == this.option.cid
-      );
-      this.detail = this.list.children[this.detailIndex];
-      console.log(
-        this.list,
-        this.detailIndex,
-        this.list.children.length,
-        this.detailIndex < this.list.length - 1
-      );
+    getList() {
+      this.list = this.main_list.find(
+        (item) => item.id == this.option.id
+      ).children;
+      this.getPart(this.option.cid);
     },
-    on_next(num) {
-      this.do_play(num);
-      this.onAnalyse();
+    getPart(cid) {
+      this.detailIndex = this.list.findIndex((item) => item.id == cid);
+      let part = [];
+
+      let prev = this.list[this.detailIndex - 1];
+      let current = this.list[this.detailIndex];
+      let next = this.list[this.detailIndex + 1];
+      if (prev) {
+        part.push(prev);
+      }
+      part.push(current);
+      if (next) {
+        part.push(next);
+      }
+      this.current = this.old.current;
+      this.$nextTick(() => {
+        this.part = part;
+        this.current = this.part.findIndex((item) => item.id === current.id);
+        this.do_play();
+      });
+    },
+    onChange(e) {
+      if (!e.detail.source) return;
+      if (e.detail.source === "touch") {
+        this.onAuto(false);
+      }
+      this.old.current = e.detail.current;
+      this.getPart(this.part[this.old.current].id);
+    },
+    onMusic() {
+      this.status.no_music = !this.status.no_music;
     },
     onAnalyse() {
-      let data = {
-        user_id: this.$store.getters.user_id,
-      };
-      ajax({ url: `/analyse`, data }).then();
+      getApp().analyse();
       this.$store.state.app.userInfo.times_word++;
     },
-    do_play(num) {
-      this.detail = this.list.children[num];
-      this.detailIndex = num;
-      console.log(this.detail);
-      //写入bar中间文字
+    do_play() {
+      let detail = this.list[this.detailIndex];
+      // 写入bar中间文字
       wx.setNavigationBarTitle({
-        title: this.detail.cn,
+        title: detail.cn,
       });
-      this.on_play();
+      this.on_play(detail.music);
+      this.onAnalyse();
     },
-    on_play() {
-      //判断静音 和 手动播放
+    on_play(url) {
+      // 判断静音 和 手动播放
       if (this.status.no_music) return;
-      const innerAudioContext = uni.createInnerAudioContext();
-      innerAudioContext.autoplay = true;
-      innerAudioContext.src = this.detail.music;
-      innerAudioContext.onPlay(() => {
+      if (this.audio) {
+        this.audio.stop();
+      }
+      this.audio = uni.createInnerAudioContext();
+      this.audio.autoplay = true;
+      this.audio.src = url;
+      this.audio.onPlay(() => {
         console.log("开始播放");
       });
-      innerAudioContext.onError((res) => {
+      this.audio.onError((res) => {
         console.log(res.errMsg);
         console.log(res.errCode);
       });
     },
-    on_auto_play() {
-      let max = this.list.children.length;
-      let val = this.detailIndex + 1 >= max ? 0 : this.detailIndex + 1;
-      console.log(val);
-      this.do_play(val);
+    onAuto(val) {
       clearTimeout(this.time);
+      this.status.auto_play = val;
+      this.on_auto_play();
+    },
+    on_auto_play() {
+      clearTimeout(this.time);
+      if (!this.status.auto_play) return;
+      if (this.detailIndex >= this.list.length - 1) return;
       this.time = setTimeout(() => {
+        this.onChange({
+          detail: { current: this.current + 1, source: "auto" },
+        });
         this.on_auto_play();
       }, 2000);
+    },
+    onTxt() {
+      this.status.hide_text = !this.status.hide_text;
     },
   },
 };
@@ -249,5 +314,17 @@ export default {
   line-height: 12.5vw;
   color: #989898;
   margin-bottom: 4vw;
+}
+.opacity {
+  opacity: 0.01;
+}
+
+.swiper {
+  height: 100vh;
+}
+.navBox {
+  z-index: 2;
+  right: 0;
+  top: 0;
 }
 </style>
