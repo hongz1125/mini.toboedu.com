@@ -85,11 +85,12 @@ export default {
       });
     },
     //写入用户信息
-    put_logintime(userInfo) {
+    setUserInfo(userInfo) {
       return new Promise((resolve, reject) => {
         ajax({
-          url: `/user_login`,
+          url: `/userinfo/edit`,
           data: {
+            id: this.userInfo.id,
             ...userInfo,
             wx_openid: this.wx_openid,
           },
@@ -239,6 +240,21 @@ export default {
         });
       }
     },
+
+    // 播放激励广告
+    playAd() {
+      let videoAd = this.videoAd;
+      if (videoAd) {
+        videoAd.show().catch(() => {
+          videoAd
+            .load()
+            .then(() => videoAd.show())
+            .catch((err) => {
+              console.log("激励视频 广告显示失败");
+            });
+        });
+      }
+    },
   },
 };
 </script>
@@ -246,6 +262,7 @@ export default {
 <style lang="scss">
 @import url("@/common/iconfont.css");
 @import url("@/common/weui.wxss");
+
 .main_list {
   display: flex;
   flex-wrap: wrap;

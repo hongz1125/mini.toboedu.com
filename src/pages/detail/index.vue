@@ -58,8 +58,6 @@
 </template>
 
 <script>
-import { ajax } from "@/utils";
-
 export default {
   data() {
     return {
@@ -158,7 +156,7 @@ export default {
       this.status.no_music = !this.status.no_music;
     },
     onAnalyse() {
-      getApp().analyse();
+      getApp().$vm.analyse();
       this.$store.state.app.userInfo.times_word++;
     },
     do_play() {

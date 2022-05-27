@@ -1,5 +1,5 @@
 <template>
-  <view class="content">
+  <view class="content" v-if="isReady">
     <Nav />
     <scroll-view scroll-y class="main_box__scroll">
       <view class="main_list" v-if="list">
@@ -20,6 +20,7 @@
           <view class="main_list__text">{{ item.cn }}</view>
         </view>
       </view>
+
       <ad v-if="is_ad" unit-id="adunit-51272ea8d1a01ce2"></ad>
     </scroll-view>
   </view>
@@ -32,6 +33,7 @@ export default {
     return {
       title: "Hello",
       userInfo: {},
+      isReady: false,
     };
   },
   computed: {
@@ -55,11 +57,15 @@ export default {
     getApp()
       .$vm.on_ready()
       .then(() => {
+        this.isReady = true;
         console.log("ready");
       });
   },
   onShow() {},
   methods: {
+    onAd() {
+      getApp().$vm.playAd();
+    },
     isItemShow(item) {
       if (item.is_vip && !this.is_vip && this.is_ios) {
         return false;
@@ -90,10 +96,12 @@ export default {
         title: "提示",
         content: "成为会员可以解锁全部单词卡",
         cancelText: "取消",
-        confirmText: "购买会员",
+        confirmText: "观看广告",
         success: (res) => {
           if (!res.confirm) return;
-          getApp().$vm.on_pay();
+          // 支付无法使用  走广告
+          // getApp().$vm.on_pay();
+          this.onAd();
         },
       };
       uni.showModal(param);
@@ -101,3 +109,4 @@ export default {
   },
 };
 </script>
+<style scoped></style>

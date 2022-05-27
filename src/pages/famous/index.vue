@@ -17,13 +17,17 @@
       class="swiperItem"
     >
       <image class="img" mode="aspectFill" :src="`${item.img}!jpg`"></image>
+      <view class="content" :style="`top:${100 + (item.id % 10) * 20}px`">
+        {{ item.content }}
+      </view>
       <view class="detail">
-        <view class="detail__content">{{ item.content }}</view>
         <view class="detail__translation">{{ item.translation }}</view>
-        <view class="detail__author"
-          ><text>{{ item.showDate }}</text>
-          <text>—— {{ item.author }}</text></view
-        >
+        <view class="detail__date">
+          <text>{{ item.showDate }}</text>
+        </view>
+        <view class="detail__author">
+          <text>—— {{ item.author }}</text>
+        </view>
       </view>
     </swiper-item>
   </swiper>
@@ -72,6 +76,11 @@ export default {
     }
   },
   methods: {
+    getTop() {
+      let top = Math.floor(Math.random() * 10) * 10;
+      console.log(top, 111);
+      return `top:${top}px`;
+    },
     // 获取日期字符
     getDate(changeDays) {
       return this.$utils
@@ -101,7 +110,6 @@ export default {
           if (res[2]) {
             this.part.push(res[2]);
           }
-          console.log(this.part, 2222);
           this.current = res[0] ? 1 : 0;
           this.on_play(this.part[this.current].content);
         });
@@ -181,32 +189,33 @@ export default {
   height: 100%;
   position: absolute;
 }
+.content {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: 20rpx;
+  background: rgba(0, 0, 0, 0.4);
+  font-weight: 500;
+  color: #fff;
+  font-size: 50rpx;
+  top: 50rpx;
+  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
 .detail {
   position: fixed;
   bottom: 30px;
-  left: 10px;
-  right: 10px;
-  font-size: 4vw;
+  left: 20rpx;
+  right: 70rpx;
   color: #fff;
-  line-height: 6vw;
-  background: rgba(0, 0, 0, 0.4);
-  padding: 10px;
-  text-align: justify;
+  padding: 10rpx;
+  font-size: 26rpx;
 }
 .detail__date {
-  font-size: 7vw;
   font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
   margin-bottom: 10px;
-  opacity: 0.8;
-  line-height: 1em;
-}
-.detail__content {
-  margin-bottom: 15px;
-  font-size: 5vw;
 }
 .detail__translation {
   margin-bottom: 15px;
-  font-size: 4vw;
 }
 .detail__author {
   display: flex;

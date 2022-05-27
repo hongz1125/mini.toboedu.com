@@ -43,5 +43,9 @@
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "英语卡片小程序",
     "navigationBarBackgroundColor": "#ffffff"
+  },
+  "usingComponents": {
+    "mp-cells": "weui-miniprogram/cells/cells",
+    "mp-cell": "weui-miniprogram/cell/cell"
   }
 }

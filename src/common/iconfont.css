@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 800823 */
-  src: url('//at.alicdn.com/t/font_800823_g5ilfco27ip.woff2?t=1651567999888') format('woff2'),
-       url('//at.alicdn.com/t/font_800823_g5ilfco27ip.woff?t=1651567999888') format('woff'),
-       url('//at.alicdn.com/t/font_800823_g5ilfco27ip.ttf?t=1651567999888') format('truetype');
+  src: url('//at.alicdn.com/t/font_800823_yk0r2t8izes.woff2?t=1653183658003') format('woff2'),
+       url('//at.alicdn.com/t/font_800823_yk0r2t8izes.woff?t=1653183658003') format('woff'),
+       url('//at.alicdn.com/t/font_800823_yk0r2t8izes.ttf?t=1653183658003') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,126 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.tb_cuxiao:before {
+  content: "\e66f";
+}
+
+.tb_dangao:before {
+  content: "\e670";
+}
+
+.tb_dizhi:before {
+  content: "\e671";
+}
+
+.tb_dianzan:before {
+  content: "\e672";
+}
+
+.tb_dianpu:before {
+  content: "\e673";
+}
+
+.tb_gongneng:before {
+  content: "\e674";
+}
+
+.tb_huojian:before {
+  content: "\e675";
+}
+
+.tb_gouwuche:before {
+  content: "\e676";
+}
+
+.tb_jingdian:before {
+  content: "\e677";
+}
+
+.tb_gaogenxie:before {
+  content: "\e678";
+}
+
+.tb_jiesuo:before {
+  content: "\e679";
+}
+
+.tb_gouwudai:before {
+  content: "\e67a";
+}
+
+.tb_naozhong:before {
+  content: "\e67b";
+}
+
+.tb_liwu:before {
+  content: "\e67c";
+}
+
+.tb_kafei:before {
+  content: "\e67d";
+}
+
+.tb_wenjianjia:before {
+  content: "\e67e";
+}
+
+.tb_shanchu:before {
+  content: "\e67f";
+}
+
+.tb_jiandao:before {
+  content: "\e680";
+}
+
+.tb_shezhi:before {
+  content: "\e681";
+}
+
+.tb_yonghu1:before {
+  content: "\e682";
+}
+
+.tb_zhaopian:before {
+  content: "\e683";
+}
+
+.tb_youjian:before {
+  content: "\e684";
+}
+
+.tb_xiaoxiduihua:before {
+  content: "\e685";
+}
+
+.tb_xiangji:before {
+  content: "\e686";
+}
+
+.tb_yaopin:before {
+  content: "\e688";
+}
+
+.tb_yusan:before {
+  content: "\e689";
+}
+
+.tb_youhuiquan:before {
+  content: "\e68a";
+}
+
+.tb_zuanshihuiyuan:before {
+  content: "\e68b";
+}
+
+.tb_xiaxue:before {
+  content: "\e68c";
+}
+
+.tb_wangluo:before {
+  content: "\e68d";
 }
 
 .tb_loop:before {

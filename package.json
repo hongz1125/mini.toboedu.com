@@ -67,6 +67,7 @@
     "flyio": "^0.6.2",
     "moment": "^2.29.3",
     "regenerator-runtime": "^0.12.1",
+    "tdesign-miniprogram": "^0.11.2",
     "vue": "^2.6.11",
     "vuex": "^3.2.0"
   },
@@ -86,14 +87,16 @@
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "babel-plugin-import": "^1.11.0",
-    "cross-env": "^7.0.2",
+    "cross-env": "^7.0.3",
     "jest": "^25.4.0",
+    "mini-program-iconfont-cli": "^0.6.1",
     "mini-types": "*",
     "miniprogram-api-typings": "*",
     "node-sass": "^4.14.1",
     "postcss-comment": "^2.0.0",
     "sass-loader": "^10.2.0",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "weui-miniprogram": "^1.2.3"
   },
   "browserslist": [
     "Android >= 4.4",
