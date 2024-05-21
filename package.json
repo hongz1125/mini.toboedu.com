@@ -65,7 +65,6 @@
     "@vue/shared": "^3.0.0",
     "core-js": "^3.6.5",
     "flyio": "^0.6.2",
-    "moment": "^2.29.3",
     "regenerator-runtime": "^0.12.1",
     "tdesign-miniprogram": "^0.11.2",
     "vue": "^2.6.11",
@@ -92,8 +91,10 @@
     "mini-program-iconfont-cli": "^0.6.1",
     "mini-types": "*",
     "miniprogram-api-typings": "*",
+    "moment": "^2.29.4",
     "node-sass": "^4.14.1",
     "postcss-comment": "^2.0.0",
+    "qs": "^6.11.0",
     "sass-loader": "^10.2.0",
     "vue-template-compiler": "^2.6.11",
     "weui-miniprogram": "^1.2.3"

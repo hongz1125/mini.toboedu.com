@@ -17,7 +17,7 @@
       class="swiperItem"
     >
       <image class="img" mode="aspectFill" :src="`${item.img}!jpg`"></image>
-      <view class="content" :style="`top:${100 + (item.id % 10) * 20}px`">
+      <view class="content" style="top: 100px">
         {{ item.content }}
       </view>
       <view class="detail">

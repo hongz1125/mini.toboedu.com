@@ -1,7 +1,13 @@
 let loading = 0;
 
+let isDev = process.env.NODE_ENV === "development";
+
 // 不支持本地调试
-let api_base = "https://www.toboedu.com/api/english_mini";
+
+let api_base = `https://www.toboedu.com/api/english_mini`;
+if (isDev) {
+  // api_base = `http://test-www.toboedu.com/api/english_mini`;
+}
 
 const loading_show = () => {
   loading++;
